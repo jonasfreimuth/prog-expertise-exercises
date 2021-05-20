@@ -1,0 +1,1 @@
+float arr_avg(float * arr, int arr_size);

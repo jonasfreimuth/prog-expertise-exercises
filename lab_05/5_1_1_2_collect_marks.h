@@ -1,0 +1,1 @@
+void collect_marks(float * mark_array, int n_students);
