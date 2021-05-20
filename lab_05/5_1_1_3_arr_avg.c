@@ -5,8 +5,7 @@ float arr_avg(float * arr, int arr_size) {
     float avg;
 
     for (int i = 0; i < arr_size; i ++) {
-        sum = sum + *arr;
-        arr ++;
+        sum = sum + arr[i];
     }
 
     avg = sum / arr_size;
@@ -18,7 +17,7 @@ float arr_avg(float * arr, int arr_size) {
 int main() {
     float test_arr[5] = {1.1, 2.2, 3.3, 4.4, 5.5};
 
-    float test_avg = arr_avg(test_arr, 3);
+    float test_avg = arr_avg(test_arr, 5);
 
     printf("Average of array ");
 
@@ -33,4 +32,5 @@ int main() {
     printf(" is %f.", test_avg);
 
     return (0);
-} */
+}
+ */
