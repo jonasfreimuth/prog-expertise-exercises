@@ -30,7 +30,6 @@ int main() {
         i_sqrt = sqrt(i);
 
         fprintf(f_pt, "%d\t%f\t%f\t%f\n", i, i_square, i_cube, i_sqrt);
-
     }
 
     fclose(f_pt);
