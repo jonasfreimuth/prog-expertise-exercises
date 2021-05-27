@@ -3,12 +3,14 @@
 # include "5_1_1_2_collect_marks.h"
 # include "5_1_1_3_arr_avg.h"
 # include "5_1_1_4_print_avg.h"
+
 /* 
 # include "5_1_1_1_num_students.c"
 # include "5_1_1_2_collect_marks.c"
 # include "5_1_1_3_arr_avg.c"
 # include "5_1_1_4_print_avg.c"
  */
+
 int main() {
     int n_students;
     float avg;
