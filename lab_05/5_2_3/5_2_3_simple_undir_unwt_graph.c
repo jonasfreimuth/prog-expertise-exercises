@@ -3,7 +3,7 @@
 
 # define N 9
 
-float avg_degree(int n, int A[n][n]);
+double avg_degree(int n, int A[n][n]);
 
 int main() {
     /* graph represented by a adjacency matrix of size n x n,
@@ -23,15 +23,13 @@ int main() {
         { 1, 1, 1, 0, 1, 0, 1, 1, 0 }
                     };
 
-    int * arr_pt = & adj_mat;
-
     printf("Average number of neighbors of the given ");
-    printf("graph is: %f", avg_degree(N, adj_mat));
+    printf("graph is: %f\n", avg_degree(N, adj_mat));
 
     return (0);
 }
 
-float avg_degree(int n, int A[n][n]) {
+double avg_degree(int n, int A[n][n]) {
 
     int deg_sum = 0;
     int row_sum = 0;
@@ -39,7 +37,7 @@ float avg_degree(int n, int A[n][n]) {
     for (int i = 0; i < n; i ++) {
         row_sum = 0;
 
-        for (int j = 0; i < n; j ++) {
+        for (int j = 0; j < n; j ++) {
             row_sum += A[i][j];
         }
 
@@ -47,6 +45,8 @@ float avg_degree(int n, int A[n][n]) {
 
     }
 
-    return (deg_sum / n);    
+    double avg = (double) deg_sum / (double) n;
+
+    return (avg);    
 
 }
