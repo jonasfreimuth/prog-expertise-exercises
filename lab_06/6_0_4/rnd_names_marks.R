@@ -24,5 +24,6 @@ while (any(marks < 1 | marks > 6)) {
 
 names$marks <- as.character(marks)
 
-write.table(names, "marks.tab", row.names = FALSE)
+write.table(names, "marks.tab", row.names = FALSE, col.names = FALSE,
+            quote = FALSE, sep = "\t")
 
