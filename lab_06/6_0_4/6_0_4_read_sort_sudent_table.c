@@ -68,10 +68,6 @@ void print_list_to_file(student * head, char * outfile) {
         fprintf(stderr, "File %s can't be opened/created for writing.", outfile);
         exit(1);
     }
-
-    char first_name[MAX_NAME];
-    char last_name[MAX_NAME];
-    char mark[MAX_NAME];
     
     student * current;
 
