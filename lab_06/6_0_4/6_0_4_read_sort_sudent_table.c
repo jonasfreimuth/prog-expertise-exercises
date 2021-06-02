@@ -31,10 +31,10 @@ int main() {
 
     // sorting functions modify list in place
     s_list = sort_sl_mark(s_list);
-    print_list_to_file(s_list, "marks_lname_sort.tab");
+    print_list_to_file(s_list, "marks_mark_sort.tab");
 
     s_list = sort_sl_lname(s_list);
-    print_list_to_file(s_list, "marks_mark_sort.tab");
+    print_list_to_file(s_list, "marks_lname_sort.tab");
     
     return (0);
 }
@@ -149,14 +149,14 @@ student * get_stud_list(char * infile) {
 
 }
 
+
+// strcmp(current->last_name, opt->last_name) < 0
 student * sort_sl_lname(student * head) {
     student * prev, * current, * prev_opt, * opt, * new_head, * prev_new_opt;
 
-    /* 
-    Go through list linearily, find opt value,
+    /* Go through list linearily, find opt value,
     Prepend value to head
-    Start from head anew
-     */
+    Start from head anew */
 
     current = head;
     opt = current;  
@@ -168,8 +168,6 @@ student * sort_sl_lname(student * head) {
     bool update_new_head = true;
 
     while (head->next_student != NULL) {
-
-        bool opt_changed = false;
 
         current = head;
         opt = current;
@@ -179,54 +177,49 @@ student * sort_sl_lname(student * head) {
             if (strcmp(current->last_name, opt->last_name) < 0) {
                 opt = current;
                 prev_opt = prev;
-
-                opt_changed = true;
             }
 
             prev = current;
             current = current->next_student;
         }
 
-        // check if opt is same as before
-        if (opt_changed) {
+        if (opt != head) {
             prev_opt->next_student = opt->next_student;
 
             opt->next_student = head;
 
-            // if the optimum from the previous run is not NULL do this
-            // otherwise the current opt should become the new_head anyway
-            // and therefore no action is needed
-            if (prev_new_opt != NULL) {
-                prev_new_opt->next_student = opt;
-                prev_new_opt = opt;
-            }
-
-
-            // if this is the first time a new opt is found, we need to
-            // update the head of the sorted list
-            if (update_new_head) {
-                new_head = opt;
-                prev_new_opt = new_head;
-                update_new_head = false;
-            }
-
         } else {
-            head = head->next_student;
+        // opt == head
+            head = opt->next_student;            
+        }
+
+        // if this is the first time a new opt is found, we need to
+        // update the head of the sorted list
+        if (update_new_head) {
+            new_head = opt;
+            update_new_head = false;
+
+            // update the previous entry for the next optimum
+            prev_new_opt = new_head;
+        } else {
+        // otherwise update the entry preceeding the current optimum
+            prev_new_opt->next_student = opt;
+            prev_new_opt = opt;
         }
     }
 
     return (new_head);
 }
 
+
 // sod it im just copy pasting the functions
+// current->mark < opt->mark
 student * sort_sl_mark(student * head) {
     student * prev, * current, * prev_opt, * opt, * new_head, * prev_new_opt;
 
-    /* 
-    Go through list linearily, find opt value,
+    /* Go through list linearily, find opt value,
     Prepend value to head
-    Start from head anew
-     */
+    Start from head anew */
 
     current = head;
     opt = current;  
@@ -239,8 +232,6 @@ student * sort_sl_mark(student * head) {
 
     while (head->next_student != NULL) {
 
-        bool opt_changed = false;
-
         current = head;
         opt = current;
 
@@ -249,39 +240,34 @@ student * sort_sl_mark(student * head) {
             if (current->mark < opt->mark) {
                 opt = current;
                 prev_opt = prev;
-
-                opt_changed = true;
             }
 
             prev = current;
             current = current->next_student;
         }
 
-        // check if opt is same as before
-        if (opt_changed) {
+        if (opt != head) {
             prev_opt->next_student = opt->next_student;
 
             opt->next_student = head;
 
-            // if the optimum from the previous run is not NULL do this
-            // otherwise the current opt should become the new_head anyway
-            // and therefore no action is needed
-            if (prev_new_opt != NULL) {
-                prev_new_opt->next_student = opt;
-                prev_new_opt = opt;
-            }
-
-
-            // if this is the first time a new opt is found, we need to
-            // update the head of the sorted list
-            if (update_new_head) {
-                new_head = opt;
-                prev_new_opt = new_head;
-                update_new_head = false;
-            }
-
         } else {
-            head = head->next_student;
+        // opt == head
+            head = opt->next_student;            
+        }
+
+        // if this is the first time a new opt is found, we need to
+        // update the head of the sorted list
+        if (update_new_head) {
+            new_head = opt;
+            update_new_head = false;
+
+            // update the previous entry for the next optimum
+            prev_new_opt = new_head;
+        } else {
+        // otherwise update the entry preceeding the current optimum
+            prev_new_opt->next_student = opt;
+            prev_new_opt = opt;
         }
     }
 
