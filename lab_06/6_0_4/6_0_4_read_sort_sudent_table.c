@@ -29,11 +29,12 @@ int main() {
 
     print_stud_list(s_list);
 
-    student * l_name_s_list = sort_sl_lname(s_list);
-    student * mark_s_list = sort_sl_mark(s_list);
+    // sorting functions modify list in place
+    s_list = sort_sl_mark(s_list);
+    print_list_to_file(s_list, "marks_lname_sort.tab");
 
-    print_list_to_file(l_name_s_list, "marks_lname_sort.tab");
-    print_list_to_file(mark_s_list, "marks_mark_sort.tab");
+    s_list = sort_sl_lname(s_list);
+    print_list_to_file(s_list, "marks_mark_sort.tab");
     
     return (0);
 }
@@ -119,7 +120,7 @@ student * get_stud_list(char * infile) {
 
     while(fscanf(f_pt, " %100[^\t]\t%100[^\t]\t%100[^\t\n]\n ", &first_name, &last_name, &mark_char) == 3) {       
 
-        printf("%s\t%s\t%s\n", first_name, last_name, mark_char);
+        // printf("%s\t%s\t%s\n", first_name, last_name, mark_char);
 
         double mark = strtod(mark_char, NULL);
 
