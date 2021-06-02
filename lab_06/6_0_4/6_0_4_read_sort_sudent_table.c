@@ -1,9 +1,11 @@
 # include <stdio.h>
+# include <stdbool.h>
 # include <stdlib.h>
 # include <string.h>
 
 # define MAX_NAME 100
 # define MAX_FILE 1000
+
 
 typedef struct student {
     char first_name[MAX_NAME];
@@ -12,24 +14,32 @@ typedef struct student {
     struct student * next_student;
 } student;
 
+
 student * get_stud_list(char * infile);
 void print_file(char * infile);
+void print_list_to_file(student * head, char * outfile);
 void print_stud_list(student * head);
+student * sort_sl_lname(student * head);
+student * sort_sl_mark(student * head);
 
 int main() {
     char f_path[] = "marks.tab";
 
-    // print_file(f_path);
-
     student * s_list = get_stud_list(f_path);
 
     print_stud_list(s_list);
+
+    student * l_name_s_list = sort_sl_lname(s_list);
+    student * mark_s_list = sort_sl_mark(s_list);
+
+    print_list_to_file(l_name_s_list, "marks_lname_sort.tab");
+    print_list_to_file(mark_s_list, "marks_mark_sort.tab");
     
     return (0);
 }
 
-void print_file(char * infile) {
 
+void print_file(char * infile) {
     FILE * f_pt;
 
     if ((f_pt = fopen(infile, "r")) == NULL) {
@@ -50,14 +60,40 @@ void print_file(char * infile) {
     return;
 }
 
-void print_stud_list(student * head) {
+void print_list_to_file(student * head, char * outfile) {  
+    FILE * f_pt;
+
+    if ((f_pt = fopen(outfile, "w")) == NULL) {
+        fprintf(stderr, "File %s can't be opened/created for writing.", outfile);
+        exit(1);
+    }
+
+    char first_name[MAX_NAME];
+    char last_name[MAX_NAME];
+    char mark[MAX_NAME];
     
     student * current;
 
     current = head;
 
     while (current != NULL) {
-        printf("%s\t%s\t%d\n", current->first_name, current->last_name,
+        fprintf(f_pt, "%s\t%s\t%f\n", current->first_name, current->last_name,
+                current->mark);
+
+        current = current->next_student;
+    }
+
+    return;
+}
+
+
+void print_stud_list(student * head) {    
+    student * current;
+
+    current = head;
+
+    while (current != NULL) {
+        printf("%s\t%s\t%f\n", current->first_name, current->last_name,
                 current->mark);
 
         current = current->next_student;
@@ -67,7 +103,6 @@ void print_stud_list(student * head) {
 }
 
 student * get_stud_list(char * infile) {
-
     FILE * f_pt;
 
     if ((f_pt = fopen(infile, "r")) == NULL) {
@@ -77,16 +112,16 @@ student * get_stud_list(char * infile) {
 
     char first_name[MAX_NAME];
     char last_name[MAX_NAME];
-    char mark[MAX_NAME];
+    char mark_char[MAX_NAME];
     student * new, * current, * head;
 
     head = NULL;
 
-    while(fscanf(f_pt, " %100[^\t]\t%100[^\t]\t%100[^\t\n]\n ", &first_name, &last_name, &mark) == 3) {       
+    while(fscanf(f_pt, " %100[^\t]\t%100[^\t]\t%100[^\t\n]\n ", &first_name, &last_name, &mark_char) == 3) {       
 
-        printf("%s\t%s\t%s\n", first_name, last_name, mark);
+        printf("%s\t%s\t%s\n", first_name, last_name, mark_char);
 
-        double mark = (double) mark;
+        double mark = strtod(mark_char, NULL);
 
         new = (student *) malloc(sizeof(student));
         
@@ -111,4 +146,143 @@ student * get_stud_list(char * infile) {
 
     return (head);
 
+}
+
+student * sort_sl_lname(student * head) {
+    student * prev, * current, * prev_opt, * opt, * new_head, * prev_new_opt;
+
+    /* 
+    Go through list linearily, find opt value,
+    Prepend value to head
+    Start from head anew
+     */
+
+    current = head;
+    opt = current;  
+    prev_opt = NULL;
+    prev = NULL;  
+    new_head = head;
+    prev_new_opt = NULL;
+
+    bool update_new_head = true;
+
+    while (head->next_student != NULL) {
+
+        bool opt_changed = false;
+
+        current = head;
+        opt = current;
+
+        // going through the list to find its optimum
+        while (current != NULL) {
+            if (strcmp(current->last_name, opt->last_name) < 0) {
+                opt = current;
+                prev_opt = prev;
+
+                opt_changed = true;
+            }
+
+            prev = current;
+            current = current->next_student;
+        }
+
+        // check if opt is same as before
+        if (opt_changed) {
+            prev_opt->next_student = opt->next_student;
+
+            opt->next_student = head;
+
+            // if the optimum from the previous run is not NULL do this
+            // otherwise the current opt should become the new_head anyway
+            // and therefore no action is needed
+            if (prev_new_opt != NULL) {
+                prev_new_opt->next_student = opt;
+                prev_new_opt = opt;
+            }
+
+
+            // if this is the first time a new opt is found, we need to
+            // update the head of the sorted list
+            if (update_new_head) {
+                new_head = opt;
+                prev_new_opt = new_head;
+                update_new_head = false;
+            }
+
+        } else {
+            head = head->next_student;
+        }
+    }
+
+    return (new_head);
+}
+
+// sod it im just copy pasting the functions
+student * sort_sl_mark(student * head) {
+    student * prev, * current, * prev_opt, * opt, * new_head, * prev_new_opt;
+
+    /* 
+    Go through list linearily, find opt value,
+    Prepend value to head
+    Start from head anew
+     */
+
+    current = head;
+    opt = current;  
+    prev_opt = NULL;
+    prev = NULL;  
+    new_head = head;
+    prev_new_opt = NULL;
+
+    bool update_new_head = true;
+
+    while (head->next_student != NULL) {
+
+        bool opt_changed = false;
+
+        current = head;
+        opt = current;
+
+        // going through the list to find its optimum
+        while (current != NULL) {
+            if (current->mark < opt->mark) {
+                opt = current;
+                prev_opt = prev;
+
+                opt_changed = true;
+            }
+
+            prev = current;
+            current = current->next_student;
+        }
+
+        // check if opt is same as before
+        if (opt_changed) {
+            prev_opt->next_student = opt->next_student;
+
+            opt->next_student = head;
+
+            // if the optimum from the previous run is not NULL do this
+            // otherwise the current opt should become the new_head anyway
+            // and therefore no action is needed
+            if (prev_new_opt != NULL) {
+                prev_new_opt->next_student = opt;
+                prev_new_opt = opt;
+            }
+
+
+            // if this is the first time a new opt is found, we need to
+            // update the head of the sorted list
+            if (update_new_head) {
+                new_head = opt;
+                prev_new_opt = new_head;
+                update_new_head = false;
+            }
+
+        } else {
+            head = head->next_student;
+        }
+    }
+
+    return (new_head);
 }
