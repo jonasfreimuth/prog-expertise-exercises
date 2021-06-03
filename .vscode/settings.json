@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "*.o": "c",
-        "stdio.h": "c",
-        "5_1_1_2_collect_marks.h": "c"
-    }
-}
