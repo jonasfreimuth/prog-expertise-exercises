@@ -17,40 +17,147 @@ class PESport {
 
     public:
 
-        void menu(int n_qs) {
-            for (int try_no = 1; try_no <= n_qs; try_no ++) {
+        int randint(int min, int max) {
+            if (min == max) {
+                return (min);
+            }
 
-                string choice = "";
+            srand((int) time(NULL));
 
-                while (choice != "t" && choice != "s" && choice != "q") {
-                    cout << "Try #" << try_no << ", choose (s)ingle letter," <<
-                        " (t)riplett, s(i)ze, (o)ptions, or (q)uit:" << endl;
-                    cin >> choice;
-                    cout << endl;
+            int rnd = rand();
 
-                    if (choice == "t") {
-                        aaa2a();
-                    } 
-                    if (choice == "s") {
-                        a2aaa();
-                    } 
-                    if (choice == "i") {
-                        a2size();
-                    }
-                    if (choice == "q") {
-                        break;
-                    } 
-                    if (choice == "o") {
-                        setOpts();
-                    }
+            int len = max - min;
+
+            rnd = (rnd % len + 1) + min;
+
+            return (rnd);
+        }
+
+        int pseudo2idx (int pseudo_idx) {
+            int i, j;
+
+            j = 0;
+
+            // find the i'th unused aa
+            for (i = 0; i <= pseudo_idx; i ++) {
+                // skip over used amino acids between last i and next i
+                while (aa_used[j]) {
+                    j ++;
                 }
 
-                // If we wish to quit, we also need to break out of this loop
-                if (choice == "q") {
-                    break;
+                // when we have found the i'th unused aa, 
+                j ++;
+            }
+
+            return (j);
+        }
+
+        int get_rnd_aa_idx() {
+
+            /* this might be an example how not to do it, but to avoid long search
+            times when many aas are already used, instead of repeatedly choosing a 
+            random index in the aa array, a random number of maximally the number
+            of unused aas is chosen. This number specifies the i'th unused aa.
+            That index is then converted to the index of that aa in the pseudo2idx 
+            function. */
+            int pseudo_aa_idx = randint(0, n_aminos - n_aa_used - 1);
+
+            int aa_idx = pseudo2idx(pseudo_aa_idx);
+
+            if (n_aa_used >= n_aminos) {
+                cout << "All Amino Acids used up!" << endl;
+
+                // TODO: When we have a finishing function in place, call
+                //  that instead of exiting.
+                exit(1);
+            }
+
+            aa_used[aa_idx] = true;
+            n_aa_used ++;
+
+            return (aa_idx);
+        }
+
+        int find_aa_idx(string aa_code) {
+            auto s_arr = sl_code;
+
+            if (aa_code.length() > 2) {
+                s_arr = tl_code;
+            }
+
+            for (int i = 0; i < n_aminos; i ++) {
+                if (s_arr[i] == aa_code) {
+                    return (i);
                 }
             }
+
+            return (-1);
         }
+
+        void setOpts () {
+            string input;
+
+            cout << "What option should be modified?" << endl;
+            cout << "Input one of (n)umber of Tries, " << 
+                "(t)ime for one guess, or (q)uit:" << endl;
+            cin >> input;
+
+            if (input == "q") {
+                return;
+            } else if (input == "n") {
+
+                cout << "Current number of tries is " << maxTries <<
+                    endl;
+
+                cout << "How many tries do you want to do?" <<
+                    // "(changing this will reset your score)" << 
+                    endl;
+                
+                // TODO: Secure input here
+                int new_tries;
+                cin >> new_tries;
+
+                /* 
+                if (new_tries == maxTries) {
+                    cout << "Number of tries has not changed" << endl;
+                    return;
+                } 
+                 */
+
+                maxTries = new_tries;
+
+                cout << "Number of tries set to " << maxTime << "." << endl;
+
+                return;
+
+            } else if (input == "t") {
+                cout << "Current time per try is " << maxTime <<
+                    "s." << endl;
+
+                cout << "How many seconds of time would you like" <<
+                    " per try?" << endl;
+
+                // TODO: Secure input here
+                int new_time;
+                cin >> new_time;
+
+                /* 
+                if (new_time == maxTime) {
+                    cout << "Number of secpnds per try has not" <<
+                    " changed..." << endl;
+                    return;
+                } 
+                 */
+
+                maxTime = new_time;
+
+                cout << "Time per try set to " << maxTime << "s." << endl;
+
+                return;
+            } 
+
+            return;
+        } 
 
         bool aaa2a() {
             int aa_idx = get_rnd_aa_idx();
@@ -133,131 +240,40 @@ class PESport {
             return (false);
         }
 
-        int get_rnd_aa_idx() {
+        void menu(int n_qs) {
+            for (int try_no = 1; try_no <= n_qs; try_no ++) {
 
-            /* this might be an example how not to do it, but to avoid long search
-            times when many aas are already used, instead of repeatedly choosing a 
-            random index in the aa array, a random number of maximally the number
-            of unused aas is chosen. This number specifies the i'th unused aa.
-            That index is then converted to the index of that aa in the pseudo2idx 
-            function. */
-            int pseudo_aa_idx = randint(0, n_aminos - n_aa_used - 1);
+                string choice = "";
 
-            int aa_idx = pseudo2idx(pseudo_aa_idx);
+                while (choice != "t" && choice != "s" && choice != "q") {
+                    cout << "Try #" << try_no << ", choose (s)ingle letter," <<
+                        " (t)riplett, s(i)ze, (o)ptions, or (q)uit:" << endl;
+                    cin >> choice;
+                    cout << endl;
 
-            if (n_aa_used >= n_aminos) {
-                cout << "All Amino Acids used up!" << endl;
-
-                // TODO: When we have a finishing function in place, call
-                //  that instead of exiting.
-                exit(1);
-            }
-
-            aa_used[aa_idx] = true;
-            n_aa_used ++;
-
-            return (aa_idx);
-        }
-
-        int pseudo2idx (int pseudo_idx) {
-            int i, j;
-
-            j = 0;
-
-            // find the i'th unused aa
-            for (i = 0; i <= pseudo_idx; i ++) {
-                // skip over used amino acids between last i and next i
-                while (aa_used[j]) {
-                    j ++;
+                    if (choice == "t") {
+                        aaa2a();
+                    } 
+                    if (choice == "s") {
+                        a2aaa();
+                    } 
+                    if (choice == "i") {
+                        a2size();
+                    }
+                    if (choice == "q") {
+                        break;
+                    } 
+                    if (choice == "o") {
+                        setOpts();
+                    }
                 }
 
-                // when we have found the i'th unused aa, 
-                j ++;
+                // If we wish to quit, we also need to break out of this loop
+                if (choice == "q") {
+                    break;
+                }
             }
-
-            return (j);
         }
-
-        int randint(int min, int max) {
-            if (min == max) {
-                return (min);
-            }
-
-            srand((int) time(NULL));
-
-            int rnd = rand();
-
-            int len = max - min;
-
-            rnd = (rnd % len + 1) + min;
-
-            return (rnd);
-        }
-
-        void setOpts () {
-            string input;
-
-            cout << "What option should be modified?" << endl;
-            cout << "Input one of (n)umber of Tries, " << 
-                "(t)ime for one guess, or (q)uit:" << endl;
-            cin >> input;
-
-            if (input == "q") {
-                return;
-            } else if (input == "n") {
-
-                cout << "Current number of tries is " << maxTries <<
-                    endl;
-
-                cout << "How many tries do you want to do?" <<
-                    // "(changing this will reset your score)" << 
-                    endl;
-                
-                // TODO: Secure input here
-                int new_tries;
-                cin >> new_tries;
-
-                /* 
-                if (new_tries == maxTries) {
-                    cout << "Number of tries has not changed" << endl;
-                    return;
-                } 
-                 */
-
-                maxTries = new_tries;
-
-                cout << "Number of tries set to " << maxTime << "." << endl;
-
-                return;
-
-            } else if (input == "t") {
-                cout << "Current time per try is " << maxTime <<
-                    "s." << endl;
-
-                cout << "How many seconds of time would you like" <<
-                    " per try?" << endl;
-
-                // TODO: Secure input here
-                int new_time;
-                cin >> new_time;
-
-                /* 
-                if (new_time == maxTime) {
-                    cout << "Number of secpnds per try has not" <<
-                    " changed..." << endl;
-                    return;
-                } 
-                 */
-
-                maxTime = new_time;
-
-                cout << "Time per try set to " << maxTime << "s." << endl;
-
-                return;
-            } 
-
-            return;
-        } 
 
     protected:
 
