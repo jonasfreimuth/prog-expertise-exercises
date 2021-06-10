@@ -299,7 +299,11 @@ class PESport {
                 if (choice == "q") {
                     break;
                 }
+
             }
+
+            cout << "You did " << try_no << " tasks." << endl;
+            cout << "You managed to score " << score << " points." << endl;
         }
 
     protected:
@@ -315,6 +319,8 @@ class PESport {
 
         int maxTries = 10;
         int maxTime = 5;
+
+        float score;
 
         float tol = 20;
 
