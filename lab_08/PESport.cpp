@@ -161,7 +161,7 @@ class PESport {
             return;
         } 
 
-        bool aaa2a() {
+        void aaa2a() {
             int aa_idx = get_rnd_aa_idx();
             string rnd_code = tl_code[aa_idx];
 
@@ -174,18 +174,15 @@ class PESport {
 
             if (ans == sl_code[aa_idx]) {
                 cout << "Correct! +1 point" << endl;
-                return (true);
             } else {
                 cout << "Wrong!" << " Correct answer would have been " <<
                     sl_code[aa_idx] << endl;
-                return (false);
             }
-
-            // kinda unnecessary, kept for safety though
-            return (false);
+            
+            return;
         }
 
-        bool a2aaa() {
+        void a2aaa() {
             int aa_idx = get_rnd_aa_idx();
             string rnd_code = sl_code[aa_idx];
 
@@ -198,18 +195,15 @@ class PESport {
 
             if (ans == tl_code[aa_idx]) {
                 cout << "Correct! +1 point" << endl;
-                return (true);
             } else {
                 cout << "Wrong!" << " Correct answer would have been " <<
                     tl_code[aa_idx] << endl;
-                return (false);
             }
-
-            // kinda unnecessary, kept for safety though
-            return (false);
+            
+            return;
         }
 
-        bool a2size () {
+        void a2size () {
             int aa_idx = get_rnd_aa_idx();
             string rnd_code = sl_code[aa_idx];
             
@@ -230,19 +224,16 @@ class PESport {
             if (ans < lo_lim || ans > up_lim) {
                 cout << "Wrong. The correct answer would have been " <<
                     cor_ans << "\u00B1" << tol << "." << endl;
-
-                return (false);
-
+                    
             } else if (ans > lo_lim && ans < up_lim) {
                 cout << "Correct! + 1 point!" << endl;
-
-                return (true);
+                
             }
 
-            return (false);
+            return;
         }
 
-        bool lookup_aa() {
+        void lookup_aa() {
             cout << "Enter a valid amino acid code, either in long " <<
                 "or short form: " << endl;
 
@@ -253,7 +244,7 @@ class PESport {
             int aa_idx = find_aa_idx(aa_code);
 
             if (aa_idx < 0) {
-                return (false);
+                return;
             }
             cout << "Data for amino acid with code " << aa_code << endl;
 
@@ -261,7 +252,7 @@ class PESport {
             printf("%s\t\t%s\t\t%f\n", tl_code[aa_idx].c_str(), sl_code[aa_idx].c_str(),
                 ml_mass[aa_idx]);
 
-            return (true);
+            return;
         }
 
         void menu(int n_qs) {
