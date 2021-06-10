@@ -53,8 +53,8 @@ class PESport {
         }
 
         bool aaa2a() {
-            string rnd_code = tl_code[randint(0, n_aminos - 1)];
-            int aa_idx = find_aa_idx(rnd_code);
+            int aa_idx = get_rnd_aa_idx();
+            string rnd_code = tl_code[aa_idx];
 
             string ans;
 
@@ -77,8 +77,8 @@ class PESport {
         }
 
         bool a2aaa() {
-            string rnd_code = sl_code[randint(0, n_aminos - 1)];
-            int aa_idx = find_aa_idx(rnd_code);
+            int aa_idx = get_rnd_aa_idx();
+            string rnd_code = sl_code[aa_idx];
 
             string ans;
 
@@ -101,8 +101,8 @@ class PESport {
         }
 
         bool a2size () {
-            string rnd_code = sl_code[randint(0, n_aminos - 1)];
-            int aa_idx = find_aa_idx(rnd_code);
+            int aa_idx = get_rnd_aa_idx();
+            string rnd_code = sl_code[aa_idx];
             
             float ans;
 
@@ -133,20 +133,49 @@ class PESport {
             return (false);
         }
 
-        int find_aa_idx(string aa_code) {
-            auto s_arr = sl_code;
+        int get_rnd_aa_idx() {
 
-            if (aa_code.length() > 2) {
-                s_arr = tl_code;
+            /* this might be an example how not to do it, but to avoid long search
+            times when many aas are already used, instead of repeatedly choosing a 
+            random index in the aa array, a random number of maximally the number
+            of unused aas is chosen. This number specifies the i'th unused aa.
+            That index is then converted to the index of that aa in the pseudo2idx 
+            function. */
+            int pseudo_aa_idx = randint(0, n_aminos - n_aa_used - 1);
+
+            int aa_idx = pseudo2idx(pseudo_aa_idx);
+
+            if (n_aa_used >= n_aminos) {
+                cout << "All Amino Acids used up!" << endl;
+
+                // TODO: When we have a finishing function in place, call
+                //  that instead of exiting.
+                exit(1);
             }
 
-            for (int i = 0; i < n_aminos; i ++) {
-                if (s_arr[i] == aa_code) {
-                    return (i);
+            aa_used[aa_idx] = true;
+            n_aa_used ++;
+
+            return (aa_idx);
+        }
+
+        int pseudo2idx (int pseudo_idx) {
+            int i, j;
+
+            j = 0;
+
+            // find the i'th unused aa
+            for (i = 0; i <= pseudo_idx; i ++) {
+                // skip over used amino acids between last i and next i
+                while (aa_used[j]) {
+                    j ++;
                 }
+
+                // when we have found the i'th unused aa, 
+                j ++;
             }
 
-            return (-1);
+            return (j);
         }
 
         int randint(int min, int max) {
@@ -240,7 +269,7 @@ class PESport {
         array<string, 20> sl_code{ "A", "C", "D", "E", "F", "G", "H", "I", "K",
                                     "L", "M", "N", "P", "Q", "R", "S", "T", "V",
                                     "W", "Y" };
-        array<string, 20> tl_code{ "Ala", "Cys", "Asp", "Glu", "Gly", "Phe", "His", "Ile",
+        array<string, 20> tl_code{ "Ala", "Cys", "Asp", "Glu", "Phe", "Gly", "His", "Ile",
                                     "Lys", "Leu", "Met", "Asn", "Pro", "Gln", 
                                     "Arg", "Ser", "Thr", "Val", "Trp", "Tyr" };
         // according to this random website: https://www.webqc.org/aminoacids.php
@@ -251,6 +280,15 @@ class PESport {
                                     204.2262, 181.1894 };
 
         int n_aminos = sizeof(sl_code) / sizeof(sl_code[0]);
+        
+        /* 
+        array<bool, n_aminos> aa_used;
+        fill(begin(aa_used), end(aa_used), bool false);
+         */
+
+        array<bool, 20> aa_used = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0 };
+        int n_aa_used = 0;
 
 };
 
