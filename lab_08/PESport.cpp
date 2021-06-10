@@ -91,6 +91,8 @@ class PESport {
                 }
             }
 
+            cout << "Amino acid code was invalid." << endl;
+
             return (-1);
         }
 
@@ -214,7 +216,7 @@ class PESport {
             float ans;
 
             cout << "Random amino acid code is " << rnd_code << "." << endl;
-            cout << "What is its molecular weight in g/mol?" <<
+            cout << "What is its molecular mass in g/mol?" <<
                 " Enter below:" << endl;
 
             cin >> ans;
@@ -240,6 +242,28 @@ class PESport {
             return (false);
         }
 
+        bool lookup_aa() {
+            cout << "Enter a valid amino acid code, either in long " <<
+                "or short form: " << endl;
+
+            string aa_code;
+
+            cin >> aa_code;
+
+            int aa_idx = find_aa_idx(aa_code);
+
+            if (aa_idx < 0) {
+                return (false);
+            }
+            cout << "Data for amino acid with code " << aa_code << endl;
+
+            printf("Long code\tShort code\tmol. mass [g/mol]\n");
+            printf("%s\t\t%s\t\t%f\n", tl_code[aa_idx].c_str(), sl_code[aa_idx].c_str(),
+                ml_mass[aa_idx]);
+
+            return (true);
+        }
+
         void menu(int n_qs) {
             for (int try_no = 1; try_no <= n_qs; try_no ++) {
 
@@ -247,7 +271,7 @@ class PESport {
 
                 while (choice != "t" && choice != "s" && choice != "q") {
                     cout << "Try #" << try_no << ", choose (s)ingle letter," <<
-                        " (t)riplett, s(i)ze, (o)ptions, or (q)uit:" << endl;
+                        " (t)riplett, s(i)ze, (l)ookup, (o)ptions, or (q)uit:" << endl;
                     cin >> choice;
                     cout << endl;
 
@@ -259,6 +283,9 @@ class PESport {
                     } 
                     if (choice == "i") {
                         a2size();
+                    }
+                    if (choice == "l") {
+                        lookup_aa();
                     }
                     if (choice == "q") {
                         break;
