@@ -16,8 +16,8 @@ int randint(int min, int max);
   
 
 class PESport {
-    public:
-
+    public:   
+    
         int randint(int min, int max) {
             if (min == max) {
                 return (min);
@@ -231,13 +231,13 @@ class PESport {
 
             if (ans > lo_lim && ans < up_lim) {
                 cout << cols.green << "Correct! + 1 point!" << endl << cols.reset;
-                    
+                
                 score += 20 - abs(ans - cor_ans);
             } else if (ans < lo_lim || ans > up_lim) {
                 cout << cols.red << "Wrong. The correct answer would have been " <<
                     cor_ans << "\u00B1" << tol << "." << endl << cols.reset;
-                
-            }
+                    
+            } 
 
             return;
         }
@@ -310,7 +310,7 @@ class PESport {
             cout << "You managed to score " << score << " points." << endl;
         }
 
-    protected:
+    protected:     
 
         struct ANSII_col {
             string reset    = "\e[0m";
