@@ -265,11 +265,15 @@ class PESport {
         }
 
         void menu(int n_qs) {
-            for (int try_no = 1; try_no <= n_qs; try_no ++) {
+            int try_no;
+            
+            for (try_no = 1; try_no <= n_qs; try_no ++) {
 
                 string choice = "";
 
-                while (choice != "t" && choice != "s" && choice != "q") {
+                // check whether one of the options that consume a try is selected
+                while (choice != "t" && choice != "s" && choice != "q" && choice != "i" &&
+                        choice != "s") {
                     cout << "Try #" << try_no << ", choose (s)ingle letter," <<
                         " (t)riplett, s(i)ze, (l)ookup, (o)ptions, or (q)uit:" << endl;
                     cin >> choice;
