@@ -174,10 +174,13 @@ class PESport {
             cin >> ans;
 
             if (ans == sl_code[aa_idx]) {
-                cout << "Correct! +1 point" << endl;
+                cout << cols.green << "Correct! +1 point" << endl << cols.reset;
+
+                score ++;
+
             } else {
-                cout << "Wrong!" << " Correct answer would have been " <<
-                    sl_code[aa_idx] << endl;
+                cout << cols.red << "Wrong!" << " Correct answer would have been " <<
+                    sl_code[aa_idx] << endl << cols.reset;
             }
             
             return;
@@ -195,10 +198,14 @@ class PESport {
             cin >> ans;
 
             if (ans == tl_code[aa_idx]) {
-                cout << "Correct! +1 point" << endl;
+                cout << cols.green << "Correct! +1 point" << 
+                    endl << cols.reset;
+
+                score ++;
+
             } else {
-                cout << "Wrong!" << " Correct answer would have been " <<
-                    tl_code[aa_idx] << endl;
+                cout << cols.red << "Wrong!" << " Correct answer would have been " <<
+                    tl_code[aa_idx] << endl << cols.reset;
             }
             
             return;
@@ -222,12 +229,13 @@ class PESport {
             float lo_lim = cor_ans - tol;
 
 
-            if (ans < lo_lim || ans > up_lim) {
-                cout << "Wrong. The correct answer would have been " <<
-                    cor_ans << "\u00B1" << tol << "." << endl;
+            if (ans > lo_lim && ans < up_lim) {
+                cout << cols.green << "Correct! + 1 point!" << endl << cols.reset;
                     
-            } else if (ans > lo_lim && ans < up_lim) {
-                cout << "Correct! + 1 point!" << endl;
+                score += 20 - abs(ans - cor_ans);
+            } else if (ans < lo_lim || ans > up_lim) {
+                cout << cols.red << "Wrong. The correct answer would have been " <<
+                    cor_ans << "\u00B1" << tol << "." << endl << cols.reset;
                 
             }
 
@@ -295,6 +303,15 @@ class PESport {
         }
 
     protected:
+
+        struct ANSII_col {
+            string reset    = "\e[0m";
+            string yellow   = "\e[0;33m";
+            string green    = "\e[0;32m";
+            string red      = "\e[0;31m";
+        };
+
+        ANSII_col cols;
 
         int maxTries = 10;
         int maxTime = 5;
