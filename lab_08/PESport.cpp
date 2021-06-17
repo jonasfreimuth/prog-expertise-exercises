@@ -5,16 +5,6 @@
 
 using namespace std;
 
-/* 
-bool aaa2a();
-bool a2aaa();
-void menu(int n_qs);
-int find_aa_idx(string aa_code);
-int randint(int min, int max);
- */
-
-  
-
 class PESport {
     public:
 
@@ -236,7 +226,6 @@ class PESport {
             } else if (ans < lo_lim || ans > up_lim) {
                 cout << cols.red << "Wrong. The correct answer would have been " <<
                     cor_ans << "\u00B1" << tol << "." << endl << cols.reset;
-                
             }
 
             return;
@@ -348,11 +337,6 @@ class PESport {
 
         int n_aminos = sizeof(sl_code) / sizeof(sl_code[0]);
         
-        /* 
-        array<bool, n_aminos> aa_used;
-        fill(begin(aa_used), end(aa_used), bool false);
-         */
-
         array<bool, 20> aa_used = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                     0, 0, 0, 0, 0 };
         int n_aa_used = 0;
