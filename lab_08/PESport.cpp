@@ -161,12 +161,22 @@ class PESport {
             cout << "Random amino acid code is " << rnd_code << "." << endl;
             cout << "What is its one letter code? Enter below:" << endl;
 
+            start_time();
+
             cin >> ans;
 
-            if (ans == sl_code[aa_idx]) {
+            bool in_time = check_time();
+
+            if (ans == sl_code[aa_idx] && in_time) {
                 cout << cols.green << "Correct! +1 point" << endl << cols.reset;
 
                 score ++;
+
+            } else if (ans == sl_code[aa_idx] && !in_time) {
+
+                cout << cols.red << 
+                    "Correct, but you did not manage it in time" <<
+                    cols.reset << endl;
 
             } else {
                 cout << cols.red << "Wrong!" << " Correct answer would have been " <<
@@ -185,17 +195,26 @@ class PESport {
             cout << "Random amino acid code is " << rnd_code << "." << endl;
             cout << "What is its three letter code? Enter below:" << endl;
 
+            start_time();
+
             cin >> ans;
 
-            if (ans == tl_code[aa_idx]) {
-                cout << cols.green << "Correct! +1 point" << 
-                    endl << cols.reset;
+            bool in_time = check_time();
+
+            if (ans == sl_code[aa_idx] && in_time) {
+                cout << cols.green << "Correct! +1 point" << endl << cols.reset;
 
                 score ++;
 
+            } else if (ans == sl_code[aa_idx] && !in_time) {
+
+                cout << cols.red << 
+                    "Correct, but you did not manage it in time" <<
+                    cols.reset << endl;
+
             } else {
                 cout << cols.red << "Wrong!" << " Correct answer would have been " <<
-                    tl_code[aa_idx] << endl << cols.reset;
+                    sl_code[aa_idx] << endl << cols.reset;
             }
             
             return;
@@ -211,21 +230,34 @@ class PESport {
             cout << "What is its molecular mass in g/mol?" <<
                 " Enter below:" << endl;
 
+            start_time();
+
             cin >> ans;
+
+            bool in_time = check_time();
 
             float cor_ans = ml_mass[aa_idx];
 
             float up_lim = cor_ans + tol;
             float lo_lim = cor_ans - tol;
 
+            float mw_score = 20 - abs(ans - cor_ans);
 
-            if (ans > lo_lim && ans < up_lim) {
-                cout << cols.green << "Correct! + 1 point!" << endl << cols.reset;
+            if (ans > lo_lim && ans < up_lim && in_time) {
+
+                cout << cols.green << "Correct! +" << mw_score << "point(s)!" <<
+                    endl << cols.reset;
                     
-                score += 20 - abs(ans - cor_ans);
+                score += mw_score;
+            } else if (ans > lo_lim && ans < up_lim && !in_time) {
+
+                cout << cols.red << "Correct, but you were out of time." <<
+                    " You would have gotten " << mw_score << " point(s)." <<
+                    cols.reset << endl;
+
             } else if (ans < lo_lim || ans > up_lim) {
                 cout << cols.red << "Wrong. The correct answer would have been " <<
-                    cor_ans << "\u00B1" << tol << "." << endl << cols.reset;
+                    cor_ans << "\u00B1" << tol << "." << endl << cols.reset;                
             }
 
             return;
@@ -301,6 +333,25 @@ class PESport {
 
     protected:
 
+        // Record current time in object 
+        // (at least i hope its in the object and not the class)
+        void start_time() {
+            last_start_time = time(NULL);
+
+            cout << last_start_time << endl;
+        }
+
+        // check how much time has passed since the last call to 
+        // start_time and compare with max allowed time
+        bool check_time() {
+            time_t diff_time = time(NULL) - last_start_time;
+
+            if (diff_time <= maxTime) {
+                return (true);
+            }
+
+            return (false);
+        }
 
         // Coloring
         struct ANSII_col {
@@ -319,6 +370,7 @@ class PESport {
 
         // Scoring system
         float score;
+        time_t last_start_time;
 
 
         // Data and associated vars
@@ -336,7 +388,7 @@ class PESport {
                                     204.2262, 181.1894 };
 
         int n_aminos = sizeof(sl_code) / sizeof(sl_code[0]);
-        
+
         array<bool, 20> aa_used = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                     0, 0, 0, 0, 0 };
         int n_aa_used = 0;

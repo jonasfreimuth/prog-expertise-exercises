@@ -79,16 +79,27 @@ class XPESport : public PESport {
             cout << "What is its hydropathy class? Answer hydropho(b)ic, hydrophi(l)ic, or (n)eutral" <<
                 " Enter below:" << endl;
 
+            start_time();
+
             cin >> ans;
+
+            bool in_time = check_time();
 
             float hdrpty = hydropathys[aa_idx];
 
             string cor_ans = hdrpty2class(hdrpty);
 
-            if (ans == cor_ans) {
+            if (ans == cor_ans && in_time) {
                 cout << cols.green << "Correct! + 1 point!" << endl << cols.reset;
                     
                 score += 1;
+            } else if (ans == cor_ans && in_time) {
+                
+                cout << cols.red << 
+                    "Correct, but you did not manage it in time" <<
+                    cols.reset << endl;
+
+
             } else {
                 cout << cols.red << "Wrong. The correct answer would have been " <<
                     cor_ans << endl << cols.reset;                
