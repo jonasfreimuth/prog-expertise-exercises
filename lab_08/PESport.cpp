@@ -312,6 +312,8 @@ class PESport {
 
     protected:
 
+
+        // Coloring
         struct ANSII_col {
             string reset    = "\e[0m";
             string yellow   = "\e[0;33m";
@@ -321,13 +323,16 @@ class PESport {
 
         ANSII_col cols;
 
+        // Options
         int maxTries = 10;
         int maxTime = 5;
-
-        float score;
-
         float tol = 20;
 
+        // Scoring system
+        float score;
+
+
+        // Data and associated vars
         array<string, 20> sl_code{ "A", "C", "D", "E", "F", "G", "H", "I", "K",
                                     "L", "M", "N", "P", "Q", "R", "S", "T", "V",
                                     "W", "Y" };
