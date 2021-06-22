@@ -17,7 +17,7 @@
 	// }
 
 	"Cpp Makefile": {
-		"scope": "make",
+		"scope": "makefile",
 		"prefix": "make",
 		"body": [
 			"IDIR = ../${1:include}",
@@ -42,10 +42,10 @@
 			"${7:ProgName}: $(OBJ)",
 			"\t$(CC) -o $@ $^ $(CFLAGS) $(LIBSFLAGS)",
 			"",
-			".PHONY clean",
+			".PHONY: clean",
 			"",
 			"clean:",
-			"\t rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~"
+			"\trm -f $(ODIR)/*.o *~ core $(INCDIR)/*~"
 
 		]
 	}
