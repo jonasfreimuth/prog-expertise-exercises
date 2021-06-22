@@ -334,8 +334,6 @@ void PESport::menu(int n_qs) {
 // (at least i hope its in the object and not the class)
 void PESport::start_time() {
     last_start_time = time(NULL);
-
-    cout << last_start_time << endl;
 }
 
 // check how much time has passed since the last call to 
