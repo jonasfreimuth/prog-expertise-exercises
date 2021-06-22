@@ -1,0 +1,52 @@
+{
+	// Place your prog-expertise-labs workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+
+	"Cpp Makefile": {
+		"scope": "makefile",
+		"prefix": "make",
+		"body": [
+			"IDIR = ../${1:include}",
+			"CC = ${2:g++}",
+			"CFLAGS = -I $(IDIR)",
+			"",
+			"ODIR = obj",
+			"LDIR = ../${3:lib}",
+			"",
+			"LIBFLAGS = ${4:-lm}",
+			"",
+			"_DEPS = ${5:HeadFileNames}",
+			"DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))",
+			"",
+			"_OBJ = ${6:ObjFileNames}",
+			"OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))",
+			"",
+			"",
+			"$(ODIR)/%.o: %.c $(DEPS)",
+			"\t$(CC) -c -o $@ $< $(CFLAGS)",
+			"",
+			"${7:ProgName}: $(OBJ)",
+			"\t$(CC) -o $@ $^ $(CFLAGS) $(LIBSFLAGS)",
+			"",
+			".PHONY: clean",
+			"",
+			"clean:",
+			"\trm -f $(ODIR)/*.o *~ core $(INCDIR)/*~"
+
+		]
+	}
+}
