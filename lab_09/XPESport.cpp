@@ -1,5 +1,6 @@
 # include <iostream>
-# include "../lab_08/PESport.cpp"
+# include "PESport.h"
+# include "XPESport.h"
 
 using namespace std;
 
@@ -118,19 +119,3 @@ class XPESport : public PESport {
 
 };
 
-
-
-int main(int argc, char const *argv[]) {
-
-    auto pe = XPESport();
-
-    int n_qs = 10;
-
-    if (argc > 1) {
-        n_qs = stoi(argv[1]);
-    }
-    
-    pe.menu(n_qs);
-
-    return 0;
-}
