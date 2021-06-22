@@ -1,7 +1,7 @@
 GPP = g++
 SRC = ../
 
-XPESports: main.o PESport.o XPESport.o
+XPESport: main.o PESport.o XPESport.o
 	$(GPP) main.o PESport.o XPESport.o -o $(SRC)XPESport
 
 main.o: $(SRC)main.cpp $(SRC)XPESport.h
@@ -12,6 +12,12 @@ XPESport.o: $(SRC)XPESport.cpp $(SRC)XPESport.h
 	
 PESport.o: $(SRC)PESport.cpp $(SRC)PESport.h
 	$(GPP) -c $(SRC)PESport.cpp -o PESport.o
+
+PESport: main_PE.o PESport.o
+	$(GPP) main_PE.o PESport.o -o $(SRC)PESport
+
+main_PE.o: $(SRC)main_PE.cpp $(SRC)PESport.h
+	$(GPP) -c $(SRC)main_PE.cpp -o main_PE.o
 
 .PHONY: clean
 
