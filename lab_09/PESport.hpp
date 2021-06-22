@@ -1,5 +1,5 @@
-# ifndef PESPORT_H
-#  define PESPORT_H
+# ifndef PESPORT_HPP
+#  define PESPORT_HPP
 
 # include <string>
 # include <array>
