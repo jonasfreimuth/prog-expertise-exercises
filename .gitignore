@@ -1,0 +1,3 @@
+# build associated files
+**/*.o
+**/*.bin
