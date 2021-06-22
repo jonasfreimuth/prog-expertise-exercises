@@ -48,5 +48,51 @@
 			"\trm -f $(ODIR)/*.o *~ core $(INCDIR)/*~"
 
 		]
+	},
+
+	"Cpp Argparse Init": {
+		"scope": "cpp",
+		"prefix": "apinit",
+		"body": [
+			"argparse::ArgumentParser ${10:program}(\"${1:TM_FILENAME_BASE}\");"
+		]
+	},
+
+	"Cpp Argparse add switch argument": {
+		"scope": "cpp",
+		"prefix": "apas",
+		"body": [			
+			"${10:program}.add_argument(\"-${1:shortForm}\", \"--${2:longForm}\")",
+			"\t.help(\"$3\")",
+			"\t.default_value(${4|true, false|})",
+			"\t.implicit_value(${5|false, true|});"
+		]
+	},
+
+	"Cpp Argparse add typed argument": {
+		"scope": "cpp",
+		"prefix": "apat",
+		"body": [			
+			"${10:program}.add_argument(\"-${1:shortForm}\", \"--${2:longForm}\")",
+			"\t.help(\"$3\")",
+			"\t.default_value(\"$4\")",
+			"\t.action([](const std::string& value) {",
+			"\t\treturn ${5:std::stoi(value)};",
+			"\t});"
+		]
+	},
+
+	"Cpp Argparse parse args": {
+		"scope": "cpp",
+		"prefix": "appa",
+		"body": [
+			"try {",
+			"\t${10:program}.parse_args(argc, argv);",
+			"} catch (const std::runtime_error& err) {",
+			"\tstd::cout << err.what() << std::endl;",
+			"\tstd::cout << $10;",
+			"\texit(0);",
+			"}"
+		]
 	}
 }
