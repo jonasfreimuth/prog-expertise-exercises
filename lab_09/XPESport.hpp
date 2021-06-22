@@ -9,7 +9,7 @@ class XPESport : public PESport {
 
     public:   
 
-        void menu(int n_qs);
+        void menu(int n_qs, std::string pre_choice);
 
     protected:
 

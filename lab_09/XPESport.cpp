@@ -2,9 +2,12 @@
 # include "PESport.hpp"
 # include "XPESport.hpp"
 
+/* // Used for debugging with vscode
+# include "PESport.cpp" */
+
 using namespace std; 
 
-void XPESport::menu(int n_qs) {
+void XPESport::menu(int n_qs, string pre_choice) {
     int try_no;
     
     for (try_no = 1; try_no <= n_qs; try_no ++) {
@@ -12,12 +15,20 @@ void XPESport::menu(int n_qs) {
         string choice = "";
 
         // check whether one of the options that consume a try is selected
-        while (choice != "t" && choice != "s" && choice != "i" && choice != "h"&& choice != "q"  &&
+        while (choice != "t" && choice != "s" && choice != "i" && choice != "h" && choice != "q"  &&
                 choice != "s") {
-            cout << "Try #" << try_no << ", choose (s)ingle letter," <<
-                " (t)riplett, s(i)ze, (h)ydropathy, (l)ookup, (o)ptions, or (q)uit:" << endl;
-            cin >> choice;
-            cout << endl;
+
+            cout << "Try #" << try_no << ". " << endl;
+
+            // overwrite choice if it is predetermined
+            if (pre_choice != "") {
+                choice = pre_choice;
+            } else {                    
+                cout << "Choose (s)ingle letter," <<
+                    " (t)riplett, s(i)ze, (h)ydropathy, (l)ookup, (o)ptions, or (q)uit:" << endl;
+                cin >> choice;
+                cout << endl;
+            }
 
             if (choice == "t") {
                 aaa2a();
