@@ -60,7 +60,7 @@ void XPESport::menu(int n_qs, string pre_choice) {
 
     }
 
-    cout << "You did " << try_no << " tasks." << endl;
+    cout << "You did " << try_no - 1 << " tasks." << endl;
     cout << "You managed to score " << score << " points." << endl;
 }
 
