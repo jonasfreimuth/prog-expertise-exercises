@@ -200,12 +200,12 @@ void PESport::a2aaa() {
 
     bool in_time = check_time();
 
-    if (ans == sl_code[aa_idx] && in_time) {
+    if (ans == tl_code[aa_idx] && in_time) {
         cout << cols.green << "Correct! +1 point" << endl << cols.reset;
 
         score ++;
 
-    } else if (ans == sl_code[aa_idx] && !in_time) {
+    } else if (ans == tl_code[aa_idx] && !in_time) {
 
         cout << cols.red << 
             "Correct, but you did not manage it in time" <<
@@ -213,7 +213,7 @@ void PESport::a2aaa() {
 
     } else {
         cout << cols.red << "Wrong!" << " Correct answer would have been " <<
-            sl_code[aa_idx] << endl << cols.reset;
+            tl_code[aa_idx] << endl << cols.reset;
     }
     
     return;
