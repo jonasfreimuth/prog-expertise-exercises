@@ -82,6 +82,16 @@
 		]
 	},
 
+	"Cpp Argparse add positional argument": {
+		"scope": "cpp",
+		"prefix": "apap",
+		"body": [			
+			"$1.add_argument(\"$2\")",
+			"\t.default_value(\"Door\")",
+			"\t.help(\"String to which the destination string will be compared\");"
+		]
+	},
+
 	"Cpp Argparse parse args": {
 		"scope": "cpp",
 		"prefix": "appa",
