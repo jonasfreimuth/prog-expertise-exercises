@@ -1,0 +1,6 @@
+# build associated files
+**/*.o
+**/*.bin
+
+# build associated directories
+**/build/

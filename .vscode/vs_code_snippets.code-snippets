@@ -1,0 +1,98 @@
+{
+	// Place your prog-expertise-labs workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+
+	"Cpp Makefile": {
+		"scope": "makefile",
+		"prefix": "make",
+		"body": [
+			"IDIR = ../${1:include}",
+			"CC = ${2:g++}",
+			"CFLAGS = -I $(IDIR)",
+			"",
+			"ODIR = obj",
+			"LDIR = ../${3:lib}",
+			"",
+			"LIBFLAGS = ${4:-lm}",
+			"",
+			"_DEPS = ${5:HeadFileNames}",
+			"DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))",
+			"",
+			"_OBJ = ${6:ObjFileNames}",
+			"OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))",
+			"",
+			"",
+			"$(ODIR)/%.o: %.c $(DEPS)",
+			"\t$(CC) -c -o $@ $< $(CFLAGS)",
+			"",
+			"${7:ProgName}: $(OBJ)",
+			"\t$(CC) -o $@ $^ $(CFLAGS) $(LIBSFLAGS)",
+			"",
+			".PHONY: clean",
+			"",
+			"clean:",
+			"\trm -f $(ODIR)/*.o *~ core $(INCDIR)/*~"
+
+		]
+	},
+
+	"Cpp Argparse Init": {
+		"scope": "cpp",
+		"prefix": "apinit",
+		"body": [
+			"argparse::ArgumentParser ${10:program}(\"${1:TM_FILENAME_BASE}\");"
+		]
+	},
+
+	"Cpp Argparse add switch argument": {
+		"scope": "cpp",
+		"prefix": "apas",
+		"body": [			
+			"${10:program}.add_argument(\"-${1:shortForm}\", \"--${2:longForm}\")",
+			"\t.help(\"$3\")",
+			"\t.default_value(${4|true, false|})",
+			"\t.implicit_value(${5|false, true|});"
+		]
+	},
+
+	"Cpp Argparse add typed argument": {
+		"scope": "cpp",
+		"prefix": "apat",
+		"body": [			
+			"${10:program}.add_argument(\"-${1:shortForm}\", \"--${2:longForm}\")",
+			"\t.help(\"$3\")",
+			"\t.default_value(\"$4\")",
+			"\t.action([](const std::string& value) {",
+			"\t\treturn ${5:std::stoi(value)};",
+			"\t});"
+		]
+	},
+
+	"Cpp Argparse parse args": {
+		"scope": "cpp",
+		"prefix": "appa",
+		"body": [
+			"try {",
+			"\t${10:program}.parse_args(argc, argv);",
+			"} catch (const std::runtime_error& err) {",
+			"\tstd::cout << err.what() << std::endl;",
+			"\tstd::cout << $10;",
+			"\texit(0);",
+			"}"
+		]
+	}
+}
