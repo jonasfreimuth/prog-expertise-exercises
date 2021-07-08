@@ -64,8 +64,8 @@
 		"body": [			
 			"${10:program}.add_argument(\"-${1:shortForm}\", \"--${2:longForm}\")",
 			"\t.help(\"$3\")",
-			"\t.default_value(${4|true, false|})",
-			"\t.implicit_value(${5|false, true|});"
+			"\t.default_value(${4|flase, true|})",
+			"\t.implicit_value(${5|true, false|});"
 		]
 	},
 
