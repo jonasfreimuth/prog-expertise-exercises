@@ -87,8 +87,8 @@
 		"prefix": "apap",
 		"body": [			
 			"$1.add_argument(\"$2\")",
-			"\t.default_value(\"Door\")",
-			"\t.help(\"String to which the destination string will be compared\");"
+			"\t.default_value(\"$3\")",
+			"\t.help(\"$4\");"
 		]
 	},
 
