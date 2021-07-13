@@ -4,3 +4,6 @@
 
 # build associated directories
 **/build/
+
+# data files 
+**/*.fasta
