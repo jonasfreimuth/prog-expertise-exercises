@@ -18,7 +18,8 @@ namespace jfutils {
 
     }
 
-    std::vector<bool> grepl(std::vector<std::string> string_vec, const std::string pattern) {
+    std::vector<bool> grepl(std::vector<std::string> string_vec,
+                                const std::string pattern) {
 
         std::vector<bool> out_vec;
 
@@ -52,7 +53,8 @@ namespace jfutils {
 
         for (auto i : x) {
 
-            std::string sub = std::regex_replace(i, std::regex(pattern), replacement);
+            std::string sub = std::regex_replace(i, std::regex(pattern),
+                                                    replacement);
 
             out.push_back(sub);
         }
@@ -91,7 +93,7 @@ namespace jfutils {
 }
 
 
-int main(int argc, char const *argv[]) {
+/* int main(int argc, char const *argv[]) {
 
     using namespace std;
 
@@ -133,5 +135,5 @@ int main(int argc, char const *argv[]) {
     std::cout << "All: " << jfutils::all(bool_vec) << "\n";
 
     return 0;
-}
+} */
 
