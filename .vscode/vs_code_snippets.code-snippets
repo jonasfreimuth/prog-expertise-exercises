@@ -104,5 +104,11 @@
 			"\texit(0);",
 			"}"
 		]
+	},
+
+	"Cpp Argparse get argument": {
+		"scope": "cpp",
+		"prefix": "apget",
+		"body": "${1:std::string} $2 = $3.get<$1>(\"--$2\");$0"
 	}
 }
