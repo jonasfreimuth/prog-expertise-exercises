@@ -32,6 +32,34 @@ namespace jfutils {
 
     }
 
+    std::string gsub(const std::string pattern,
+                        const std::string replacement,
+                        std::string x) {
+
+        std::string out;
+
+        out = std::regex_replace(x, std::regex(pattern), replacement);
+
+        return(out);
+    }
+
+    std::vector<std::string> gsub(const std::string pattern,
+                                    const std::string replacement,
+                                    std::vector<std::string> x) {
+        
+        std::vector<std::string> out = {  };
+        std::string sub = "";
+
+        for (auto i : x) {
+
+            std::string sub = std::regex_replace(i, std::regex(pattern), replacement);
+
+            out.push_back(sub);
+        }
+
+        return(out);
+    }
+
     bool any(std::vector<bool> x) {
 
         int sum = 0;
@@ -69,6 +97,7 @@ int main(int argc, char const *argv[]) {
 
     string str = "Applesauce";
 
+    // Grepl
     cout << "Grepl string: " << jfutils::grepl(str, "pp") <<
         endl;
 
@@ -84,6 +113,19 @@ int main(int argc, char const *argv[]) {
         cout << "\t" << i << endl;
     }
 
+    // Gsub
+    cout << "Gsub string: " << jfutils::gsub("e", "*", str) <<
+        endl;
+
+    vector<string> gsub_vec = jfutils::gsub("e", "*", string_vec);
+
+    cout << "Gsub vector: " << endl;
+
+    for (auto i : gsub_vec) {        
+        cout << "\t" << i << endl;
+    }
+
+    // Any All
     std::vector<bool> bool_vec = { 1, 1, 1, 0 };
 
     std::cout << "Any: " << jfutils::any(bool_vec) << "\n";
