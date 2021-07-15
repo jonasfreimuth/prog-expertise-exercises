@@ -7,3 +7,5 @@
 
 # data files 
 **/*.fasta
+**/*.zip
+**/*.obo
