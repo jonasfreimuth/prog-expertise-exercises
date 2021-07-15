@@ -109,6 +109,6 @@
 	"Cpp Argparse get argument": {
 		"scope": "cpp",
 		"prefix": "apget",
-		"body": "${1:std::string} $2 = $3.get<$1>(\"--$2\");$0"
+		"body": "${1:std::string} $2 = ${3:parser}.get<$1>(\"--$2\");$0"
 	}
 }
