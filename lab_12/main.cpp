@@ -47,8 +47,11 @@ int main(int argc, char const *argv[]) {
     auto name   = go_util.getName(filename, id);
     auto is_obs = go_util.isObsolete(filename, id);
 
-    cout << "The entry matching " << id << " is:\n" <<
-        entry << "\n";
+    cout << "The entry matching " << id << " is:\n";
+    
+    /* for (auto i : entry) {
+        cout << i.first() << ": " << i.second() << "\n";
+    } */
 
     cout << "Name of " << id << " is " << name << "\n";
 

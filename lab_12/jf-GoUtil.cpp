@@ -7,16 +7,20 @@
 # include "jf-GoUtil.hpp"
 
 
-std::string GoUtil::getEntry(std::string filename, std::string id) {  
+std::map<std::string, std::string> GoUtil::getEntry(std::string filename, std::string id) {  
 
     std::ifstream infile; 
     std::string line = "";
-    std::string entry = "";
-    std::regex rxId(id);
+
+    std::map< std::string, std::string > entry = {};
+    std::string key = "";
+    std::string val = "";
     bool match = false;
 
-    std::regex newEntry("^\[TERM\]");
+    std::cmatch m_obj;
+    std::regex rxId(id);
     std::regex stopEntry("^$");
+    std::regex splitField("$([^:]: (.*)$");
 
     infile.open(filename); 
 
@@ -30,9 +34,11 @@ std::string GoUtil::getEntry(std::string filename, std::string id) {
         }
 
         if (match) {
-            // if we are in the right entry, save the current line
-            entry.append(line);
+            std::regex_search(line, splitField);
 
+            if (m_obj.size() == 2) {
+                entry.insert( { m_obj[0], m_obj[1] } );
+            }
         }
 
         // check if we are done with the current entry
@@ -44,14 +50,6 @@ std::string GoUtil::getEntry(std::string filename, std::string id) {
                 break;
             }
         }
-
-        if (match) {
-            // if we are in the right entry, and have not 
-            // stopped with appending, add a spearation sign
-            // we wouldnt need to do this if we put in the work and
-            // did everything with maps
-            entry.append("; ");
-        }
     }
 
     return (entry);
@@ -60,17 +58,16 @@ std::string GoUtil::getEntry(std::string filename, std::string id) {
 
 std::string GoUtil::getName(std::string filename, std::string id) {
 
-    std::regex rxName("^name: ");
-    // std::regex rxNameExtract("(?<=^name: )[a-zA-Z ]");    
+    std::map< std::string, std::string > entry = {}; 
     std::string name = "";
-    std::string entry = "";
-    // std::vector <std::string> result = {  };
 
     entry = GoUtil::getEntry(filename, id);
 
-    name = std::regex_replace(entry, std::regex("(?=name: )[^;]+"), "$1");
+    /* if (entry.contains("name")){
+        name = entry["name"];
+    } */
 
-    return (name);
+    return ("temp");
 };
 
 bool GoUtil::isObsolete(std::string filename, std::string id) {

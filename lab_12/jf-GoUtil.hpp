@@ -7,7 +7,8 @@
 class GoUtil {
     public:
 
-        std::string getEntry(std::string filename, std::string id);
+        std::map<std::string, std::string> getEntry(std::string filename,
+                                                    std::string id);
 
         std::string getName(std::string filename, std::string id);
 
