@@ -22,10 +22,9 @@ int main(int argc, char const *argv[]) {
                 return (value); 
             });
 
-
     parser.add_argument("-i", "--id")
         .help("Which OBO Id to look for")
-        .default_value("")
+        .required()
         .action([](const std::string& value) {
             // TODO: Check for validity of ID
             return (value);
@@ -47,6 +46,9 @@ int main(int argc, char const *argv[]) {
     auto entry  = go_util.getEntry(filename, id);
     auto name   = go_util.getName(filename, id);
     auto is_obs = go_util.isObsolete(filename, id);
+
+    cout << "The entry matching " << id << " is:\n" <<
+        entry << "\n";
 
     cout << "Name of " << id << " is " << name << "\n";
 
