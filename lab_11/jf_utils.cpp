@@ -69,6 +69,8 @@ namespace jfutils {
         for (auto i : x) {
             if (i == true) {
                 sum ++;
+
+                break;
             }
         }
 
@@ -83,6 +85,8 @@ namespace jfutils {
         for (auto i : x) {
             if (i == true) {
                 sum ++;
+            } else {
+                break;
             }
         }
 
