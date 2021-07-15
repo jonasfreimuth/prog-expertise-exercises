@@ -50,6 +50,24 @@
 		]
 	},
 
+	"Cpp text file function": {
+		"scope": "cpp",
+		"prefix": "filefunc",
+		"body": [
+			"${1:Output Type} ${2:Function Name}(${3:std::string filename}) {",
+			"\tstd::ifstream ${4:infile};",
+			"\tstd::string line = \"\";",
+			"\t",
+			"\t$4.open($5);",
+			"\t",
+			"\twhile (std::getline($4, line)) {",
+			"\t\t$0",
+			"\t}",
+			"\treturn()",
+			"};"
+		]
+	},
+
 	"Cpp Argparse Init": {
 		"scope": "cpp",
 		"prefix": "apinit",
@@ -89,6 +107,20 @@
 			"$1.add_argument(\"$2\")",
 			"\t.default_value(\"$3\")",
 			"\t.help(\"$4\");"
+		]
+	},
+
+	"Cpp Argparse add arg with validity check": {
+		"scope": "cpp",
+		"prefix": "apaval",
+		"body": [			
+			"${1:parser}.add_argument(\"-${2:shortForm}\", \"--${3:longForm}\")",
+			"\t.help(\"$4\")",
+			"\t${5|.default_value(\"\"), .required()|}",
+			"\t.action([](const std::string& value) {",
+			"\t\t$7",
+			"\t\treturn ${8:(value)};",
+			"\t});"
 		]
 	},
 
