@@ -4,6 +4,9 @@
 # include <regex>
 # include <fstream>
 
+// debugging
+# include <filesystem>
+
 # include "jf-GoUtil.hpp"
 
 
@@ -20,7 +23,7 @@ std::map<std::string, std::string> GoUtil::getEntry(std::string filename, std::s
     std::cmatch m_obj;
     std::regex rxId(id);
     std::regex stopEntry("^$");
-    std::regex splitField("$([^:]: (.*)$");
+    std::regex splitField("^([^:]+): (.*)$");
 
     infile.open(filename); 
 
@@ -34,11 +37,16 @@ std::map<std::string, std::string> GoUtil::getEntry(std::string filename, std::s
         }
 
         if (match) {
-            std::regex_search(line, splitField);
 
-            if (m_obj.size() == 2) {
-                entry.insert( { m_obj[0], m_obj[1] } );
-            }
+            // if (std::regex_search(line, splitField)) {
+
+                std::cout << "Key: " << std::regex_replace(line, splitField, "$1") <<
+                    "\n\tValue: " << std::regex_replace(line, splitField, "$2") << "\n";
+
+                entry.insert( 
+                    { std::regex_replace(line, splitField, "$1"),
+                      std::regex_replace(line, splitField, "$2") } );
+            // }
         }
 
         // check if we are done with the current entry
@@ -63,11 +71,10 @@ std::string GoUtil::getName(std::string filename, std::string id) {
 
     entry = GoUtil::getEntry(filename, id);
 
-    /* if (entry.contains("name")){
-        name = entry["name"];
-    } */
+    // TODO: Handle name not being in entry
+    name = entry["name"];   
 
-    return ("temp");
+    return (name);
 };
 
 bool GoUtil::isObsolete(std::string filename, std::string id) {
@@ -75,3 +82,16 @@ bool GoUtil::isObsolete(std::string filename, std::string id) {
 
     return (false);
 };
+
+int main(int argc, char const *argv[])
+{
+    using namespace std;
+    namespace fs = std::filesystem;
+    
+    GoUtil go_util = GoUtil();
+
+    auto entry  = go_util.getName("go.obo", "GO:0000001");
+
+    return 0;
+}
+
