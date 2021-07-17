@@ -20,33 +20,57 @@
 		"scope": "makefile",
 		"prefix": "make",
 		"body": [
-			"IDIR = ../${1:include}",
-			"CC = ${2:g++}",
-			"CFLAGS = -I $(IDIR)",
+			"# where prject specific header files lie",
+			"INC = ${1:./}",
 			"",
-			"ODIR = obj",
-			"LDIR = ../${3:lib}",
+			"# where object files will be stored",
+			"OBJ = ${2:./build/}",
 			"",
-			"LIBFLAGS = ${4:-lm}",
+			"# file extension for executables",
+			"EXT = ${3:.bin}",
 			"",
-			"_DEPS = ${5:HeadFileNames}",
-			"DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))",
+			"# compiler path",
+			"CC =  ${4:g++}",
 			"",
-			"_OBJ = ${6:ObjFileNames}",
-			"OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))",
+			"# compiler flags",
+			"CF = ${5:-std=c++17}",
 			"",
+			"$0",
+			"",		
+			"build:",
+			"\tmkdir $(OBJ)",
 			"",
-			"$(ODIR)/%.o: %.c $(DEPS)",
-			"\t$(CC) -c -o $@ $< $(CFLAGS)",
+			".PHONY: clean, cleanall",
 			"",
-			"${7:ProgName}: $(OBJ)",
-			"\t$(CC) -o $@ $^ $(CFLAGS) $(LIBSFLAGS)",
-			"",
-			".PHONY: clean",
-			"",
+			"# remove object files that were created during compilation",
 			"clean:",
-			"\trm -f $(ODIR)/*.o *~ core $(INCDIR)/*~"
+			"\trm -rf $(OBJ)",
+			"",
+			"# reset directory to the state before compilation, deleting also",
+			"# all binary files",
+			"cleanall:",
+			"\trm -rf $(OBJ) *$(EXT)"
+		]
+	},
 
+	"Cpp Makefile .o recipe": {
+		"scope": "makefile",
+		"prefix": "recipe",
+		"body": [
+			"$(OBJ)$1.o: $1.cpp ${2:$(INC)argparse.hpp} $(OBJ)",
+			"\t$(CC) -c $1.cpp -o $(OBJ)/$1.o  $(CF)"
+		]
+	},
+
+	"Cpp Makefile app recipe": {
+		"scope": "makefile",
+		"prefix": "compile",
+		"body": [
+			"compile: $(OBJ)main.o $(OBJ)$1.o $0", 
+	 		"$(CC) $(OBJ)/main.o $(OBJ)/$1.o $0 -o $1$(EXT) $(CF)",
+			"",
+			"$1$(EXT): $(OBJ)main.o $(OBJ)$1.o $0",
+	 		"$(CC) $(OBJ)/main.o $(OBJ)/$1.o $0 -o $1$(EXT) $(CF)"
 		]
 	},
 
