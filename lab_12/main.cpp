@@ -49,9 +49,9 @@ int main(int argc, char const *argv[]) {
 
     cout << "The entry matching " << id << " is:\n";
     
-    /* for (auto i : entry) {
-        cout << i.first() << ": " << i.second() << "\n";
-    } */
+    for (auto i : entry) {
+        cout << i.first << ": " << i.second << "\n";
+    }
 
     cout << "Name of " << id << " is " << name << "\n";
 
