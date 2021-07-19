@@ -111,7 +111,7 @@ std::map< std::string, std::string > GoUtil::getChildren(std::string filename,
 
     bool match = false;
 
-    std::regex rxChildID("id: (GO:[0-9]{7})");
+    std::regex rxChildID("^id: (GO:[0-9]{7})");
     std::regex rxChildName("name: ([a-zA-z ]+)");
     std::regex is_a_split("(GO:[0-9]{7}) ! ([a-zA-z ]+)");
     std::regex rxId("^is_a: " + id);
@@ -201,7 +201,7 @@ std::map< std::string, std::string > GoUtil::getParents(std::string filename,
 
     auto is_obsole  = go_util.isObsolete(file, id);
 
-    cout << "Is obsolete: " << (bool) is_obsole << "\n";
+    cout << "Is obsolete: " << is_obsole << "\n";
 
     auto children = go_util.getChildren(file, id);
 
