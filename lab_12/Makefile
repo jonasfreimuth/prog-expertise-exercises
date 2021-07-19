@@ -27,7 +27,7 @@ $(OBJ)main.o: main.cpp argparse.hpp $(OBJ)
 $(OBJ)jf-GoUtil.o: jf-GoUtil.cpp $(OBJ)
 	 $(CC) -c jf-GoUtil.cpp -o $(OBJ)jf-GoUtil.o $(CF)
 
-build: 
+$(OBJ): 
 	mkdir $(OBJ)
 
 .PHONY: clean, cleanall
