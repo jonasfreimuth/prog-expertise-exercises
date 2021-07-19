@@ -16,16 +16,16 @@ CF = -std=c++17
 ## recipes:
 
 jf-GoUtil$(EXT): $(OBJ)main.o $(OBJ)jf-GoUtil.o 
-	 $(CC) $(OBJ)/main.o $(OBJ)/jf-GoUtil.o -o jf-GoUtil$(EXT) $(CF)
+	 $(CC) $(OBJ)main.o $(OBJ)jf-GoUtil.o -o jf-GoUtil$(EXT) $(CF)
 
 compile: $(OBJ)main.o $(OBJ)jf-GoUtil.o 
-	 $(CC) $(OBJ)/main.o $(OBJ)/jf-GoUtil.o -o jf-GoUtil$(EXT) $(CF)
+	 $(CC) $(OBJ)main.o $(OBJ)jf-GoUtil.o -o jf-GoUtil$(EXT) $(CF)
 
 $(OBJ)main.o: main.cpp argparse.hpp $(OBJ)
-	 $(CC) -c main.cpp -o $(OBJ)/main.o  $(CF)
+	 $(CC) -c main.cpp -o $(OBJ)main.o $(CF)
 
 $(OBJ)jf-GoUtil.o: jf-GoUtil.cpp $(OBJ)
-	 $(CC) -c jf-GoUtil.cpp -o $(OBJ)/jf-GoUtil.o  $(CF)
+	 $(CC) -c jf-GoUtil.cpp -o $(OBJ)jf-GoUtil.o $(CF)
 
 build: 
 	mkdir $(OBJ)
