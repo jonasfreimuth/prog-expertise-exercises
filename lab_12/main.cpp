@@ -30,7 +30,7 @@ int main(int argc, char const *argv[]) {
         .required()
         .action([](const std::string& value) {
             if (!regex_match(value, regex("^GO:[0-9]{7}$"))) {
-                cerr << "Supplied if " << value << " is not a valid GO Id.\n";
+                cerr << "Supplied id " << value << " is not a valid GO Id.\n";
                 exit(1); 
             }
 
@@ -42,6 +42,7 @@ int main(int argc, char const *argv[]) {
         .default_value("")
         .action([commands](const std::string& value) {
             if (!regex_search(commands, regex(value))) {
+                cerr << "Unknown command " << value << ".\n";
                 exit(1);
             }
             return (value);
