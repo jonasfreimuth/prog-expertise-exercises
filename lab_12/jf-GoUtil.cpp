@@ -21,7 +21,6 @@ std::map<std::string, std::string> GoUtil::getEntry(std::string filename, std::s
     std::string val = "";
     bool match = false;
 
-    std::cmatch m_obj;
     std::regex rxId(id);
     std::regex stopEntry("^$");
     std::regex splitField("^([^:]+): (.*)$");
@@ -101,13 +100,60 @@ bool GoUtil::isObsolete(std::string filename, std::string id) {
     return (out);
 };
 
-
-// TODO: This function made the wrong assupmtion about the task
-//  It should actually iterate over the file and save ids and names
-std::map<std::string, std::string> GoUtil::getChildren(std::string filename,
+std::map< std::string, std::string > GoUtil::getChildren(std::string filename,
                                                          std::string id) {
 
-    std::map< std::string, std::string > children = {}; 
+    std::map< std::string, std::string > children;
+    std::ifstream infile;
+    std::string line = "";
+    std::string childID = "";
+    std::string childName = "";
+
+    bool match = false;
+
+    std::regex rxChildID("id: (GO:[0-9]{7})");
+    std::regex rxChildName("name: ([a-zA-z ]+)");
+    std::regex is_a_split("(GO:[0-9]{7}) ! ([a-zA-z ]+)");
+    std::regex rxId("^is_a: " + id);
+    std::regex stop("^$");
+    
+    infile.open(filename);
+    
+    while (std::getline(infile, line)) {
+
+        // record id of each entry and push previous
+        if (std::regex_search(line, rxChildID)) {
+            childID = std::regex_replace(line, rxChildID, "$1");
+        }
+
+        // record name of each entry
+        if (std::regex_search(line, rxChildName)) {
+            childName = std::regex_replace(line, rxChildName, "$1");
+        }
+
+        // check if entry is a child of searched id
+        if (std::regex_search(line, rxId)) {
+            match = true;            
+        }
+        
+        // if we are at the end of an entry that is a child,
+        // push info onto map
+        if (std::regex_match(line, stop) && match) {
+            match = false;
+
+            children[childID] = childName;
+        }
+
+    }
+
+    return (children);
+};
+
+// Coded this function by accident, decided to leave it in
+std::map< std::string, std::string > GoUtil::getParents(std::string filename,
+                                                         std::string id) {
+
+    std::map< std::string, std::string > parents = {}; 
     std::map< std::string, std::string > entry = {}; 
 
     std::string is_a_string = "";
@@ -121,44 +167,58 @@ std::map<std::string, std::string> GoUtil::getChildren(std::string filename,
 
     auto map_pos = entry.find("is_a" + std::to_string(i ++));
 
-    while (std::regex_search(map_pos->first, is_a)) {
+    while (map_pos != entry.end()) {
 
         is_a_string = map_pos->second;
         
         auto key = std::regex_replace(is_a_string, is_a_split, "$1");
         auto value = std::regex_replace(is_a_string, is_a_split, "$2");
 
-        children[key] = value;
+        parents[key] = value;
 
-        auto map_pos = entry.find("is_a" + std::to_string(i ++));
+        map_pos = entry.find("is_a" + std::to_string(i ++));
 
     }
 
-    return (children);
+    return (parents);
 };
 
-int main(int argc, char const *argv[])
+
+// Used for debugging with VScode
+/* int main(int argc, char const *argv[])
 {
     using namespace std;
     namespace fs = std::filesystem;
     
     GoUtil go_util = GoUtil();
 
-    auto name  = go_util.getName("go.obo", "GO:0000001");
-    auto is_obsole  = go_util.isObsolete("go.obo", "GO:0000001");
+    string file = "go.obo";
+    string id = "GO:0000018";
 
-    auto children = go_util.getChildren("go.obo", "GO:0000001");
+    auto name  = go_util.getName(file, id);
 
-    cout << name << "\n";
-    cout << is_obsole << "\n";
+    cout << "Name: " << name << "\n";
+
+    auto is_obsole  = go_util.isObsolete(file, id);
+
+    cout << "Is obsolete: " << (bool) is_obsole << "\n";
+
+    auto children = go_util.getChildren(file, id);
 
     cout << "Children" << "\n";
 
     for (auto i : children) {
         cout << "\t" << i.first << "\t" << i.second << "\n";
     }
+    
+    auto parents = go_util.getParents(file, id);
 
+    cout << "Parents" << "\n";
+
+    for (auto i : parents) {
+        cout << "\t" << i.first << "\t" << i.second << "\n";
+    }
 
     return 0;
-}
+} */
 

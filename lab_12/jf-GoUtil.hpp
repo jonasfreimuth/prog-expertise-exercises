@@ -16,6 +16,9 @@ class GoUtil {
 
         std::map< std::string, std::string > getChildren(std::string filename,
                                                             std::string id);
+                                                            
+        std::map< std::string, std::string > getParents(std::string filename,
+                                                         std::string id);
 };
 
 # endif
