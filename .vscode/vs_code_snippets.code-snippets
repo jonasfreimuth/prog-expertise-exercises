@@ -142,7 +142,9 @@
 			"\t.help(\"$4\")",
 			"\t${5|.default_value(\"\"), .required()|}",
 			"\t.action([](const std::string& value) {",
-			"\t\t$7",
+			"\t\tif (!$6) {",
+			"\t\t\texit(${7:1})",
+			"\t\t}",
 			"\t\treturn ${8:(value)};",
 			"\t});"
 		]
