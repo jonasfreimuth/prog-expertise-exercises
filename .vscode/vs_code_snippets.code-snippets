@@ -82,12 +82,12 @@
 			"\tstd::ifstream ${4:infile};",
 			"\tstd::string line = \"\";",
 			"\t",
-			"\t$4.open($5);",
+			"\t$4.open(${5:filename});",
 			"\t",
 			"\twhile (std::getline($4, line)) {",
 			"\t\t$0",
 			"\t}",
-			"\treturn()",
+			"\treturn ();",
 			"};"
 		]
 	},
