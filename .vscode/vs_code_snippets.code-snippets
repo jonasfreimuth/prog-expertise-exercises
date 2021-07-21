@@ -58,7 +58,7 @@
 		"prefix": "recipe",
 		"body": [
 			"$(OBJ)$1.o: $1.cpp ${2:$(INC)argparse.hpp} $(OBJ)",
-			"\t$(CC) -c $1.cpp -o $(OBJ)/$1.o  $(CF)"
+			"\t$(CC) -c $1.cpp -o $(OBJ)$1.o  $(CF)"
 		]
 	},
 
@@ -67,10 +67,10 @@
 		"prefix": "compile",
 		"body": [
 			"compile: $(OBJ)main.o $(OBJ)$1.o $0", 
-	 		"$(CC) $(OBJ)/main.o $(OBJ)/$1.o $0 -o $1$(EXT) $(CF)",
+	 		"$(CC) $(OBJ)main.o $(OBJ)$1.o $0 -o $1$(EXT) $(CF)",
 			"",
 			"$1$(EXT): $(OBJ)main.o $(OBJ)$1.o $0",
-	 		"$(CC) $(OBJ)/main.o $(OBJ)/$1.o $0 -o $1$(EXT) $(CF)"
+	 		"$(CC) $(OBJ)main.o $(OBJ)$1.o $0 -o $1$(EXT) $(CF)"
 		]
 	},
 
