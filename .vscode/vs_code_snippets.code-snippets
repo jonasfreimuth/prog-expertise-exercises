@@ -96,7 +96,7 @@
 		"scope": "cpp",
 		"prefix": "apinit",
 		"body": [
-			"argparse::ArgumentParser ${10:parser}(\"${1:TM_FILENAME_BASE}\");"
+			"argparse::ArgumentParser ${10:parser}(\"$TM_FILENAME\");"
 		]
 	},
 
