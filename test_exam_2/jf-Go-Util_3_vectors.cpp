@@ -1,8 +1,9 @@
-# include <iostream>
-# include <regex>
 # include <string>
 # include <vector>
 # include <tuple>
+# include <regex>
+# include <algorithm>
+# include <iostream>
 # include <filesystem>
 # include <fstream>
 
@@ -91,8 +92,16 @@ std::vector< std::tuple< std::string, std::string, int > > getECSummary(std::str
 
     infile.close();
 
-    for (auto i = EC_counts.begin(); i != EC_counts.end(); i ++) {
-        res.push_back( std::make_tuple( filename, i->first, i->second ) );
+    for (int i = 0; i < EC_counts.size(); i ++) {
+        // from https://stackoverflow.com/questions/30611709/find-element-with-max-value-from-stdmap#30611887:
+        auto max = std::max_element(EC_counts.begin(), EC_counts.end(),
+            [](const std::pair<std::string, int>& p1, const std::pair<std::string, int>& p2) {
+                return p1.second < p2.second; 
+            });
+
+        res.push_back( std::make_tuple( filename, max->first, max->second ) );
+
+        max->second = 0;
     }
                                                 
     return (res); 
