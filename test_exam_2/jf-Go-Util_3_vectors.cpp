@@ -131,7 +131,7 @@ int main(int argc, char const *argv[]) {
 
     parser.add_argument("-n", "--nmspace")
         .help("For summary a namespace to summarise")
-        .default_value("")
+        .default_value((string) "")
         .action([namespaces](const std::string& value) {
             if (!regex_search(namespaces, regex(value))) {
                 cerr << "Unknown namespace " << value << ".\n";
@@ -154,11 +154,7 @@ int main(int argc, char const *argv[]) {
     }
 
     std::string command = parser.get<std::string>("--command");
-
-    std::string nmspace = "";
-    if (parser.is_used("--nmspace")) {
-        nmspace = parser.get<std::string>("--nmspace");
-    }
+    std::string  nmspace = parser.get<std::string>("--nmspace");
 
     std::vector<std::string> files = {};
 
@@ -181,7 +177,7 @@ int main(int argc, char const *argv[]) {
     for (auto& file : files) {
 
         if (command == "summary") {
-            if (nmspace == "empty") {
+            if (nmspace == "") {
                 cerr << "No namespace provided.\n";
                 exit(1);
             }
