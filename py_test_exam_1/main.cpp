@@ -89,11 +89,6 @@ int main(int argc, char const *argv[]) {
 
         for (auto id = ids.begin(); id != ids.end(); id ++) {
 
-            // esacpe every escapeworthy character
-            // for the moment only `|`
-            * id = regex_replace(* id, std::regex("[\\|]"), "\\\\$0");
-            // cout << "New id: " << * id << "\n";
-
             // TODO: fill in appropriate command
             if (find(commands.begin(), commands.end(), "getN") != commands.end()) {
                 // TODO: Put in appropirate pattern
@@ -114,6 +109,11 @@ int main(int argc, char const *argv[]) {
                         exit(1);
                 }
             }
+
+            // esacpe every escapeworthy character
+            // for the moment only `|`
+            * id = regex_replace(* id, std::regex("[\\|]"), "\\\\$0");
+            // cout << "New id: " << * id << "\n";
         }
 
     } catch (std::logic_error& e) {
