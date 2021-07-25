@@ -112,6 +112,30 @@
 		]
 	},
 
+	"Cpp regex_search": {
+		"scope": "cpp",
+		"prefix": "search",
+		"body": "std::regex_search(${1:line}, $2)"
+	},
+
+	"Cpp regex_match": {
+		"scope": "cpp",
+		"prefix": "match",
+		"body": "std::regex_match(${1:line}, $2)"
+	},
+
+	"Cpp make regex": {
+		"scope": "cpp",
+		"prefix": "rx",
+		"body": "std::regex $1(\"$2\"))"
+	},
+
+	"Cpp replace regex": {
+		"scope": "cpp",
+		"prefix": "replace",
+		"body": "std::regex_replace(${1:line}, ${2:regexpr}, \"${3:\\$1}\")"
+	},
+
 	"Cpp Argparse Init": {
 		"scope": "cpp",
 		"prefix": "apinit",
