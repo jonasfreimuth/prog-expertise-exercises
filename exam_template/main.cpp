@@ -95,7 +95,7 @@ int main(int argc, char const *argv[]) {
             // TODO: fill in appropriate command
             if (find(commands.begin(), commands.end(), valid_commands[0]) != commands.end()) {
                 // TODO: Put in appropirate pattern
-                if (!regex_search( * id, regex("PATTERN"))) {
+                if (!regex_match( * id, regex("PATTERN"))) {
                         cout << "ID " << * id << " is not valid!\n";
                         exit(1);
                 }
