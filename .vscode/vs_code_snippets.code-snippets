@@ -97,7 +97,17 @@
 		"prefix": "forvec",
 		"body": [
 			"for (auto i = $1.begin(); i != $1.end(); i ++) {",
-			"\t$0",
+			"\t${0:// code, access elemtent via * i}",
+			"}"
+		]
+	},
+
+	"Cpp value in vector": {
+		"scope": "cpp",
+		"prefix": "find",
+		"body": [
+			"if (find(${1:vector_iterator}.begin(), $1.end(), ${2:value_to_find}) != $1.end()) {",
+			"\t${$0: // code}",
 			"}"
 		]
 	},
