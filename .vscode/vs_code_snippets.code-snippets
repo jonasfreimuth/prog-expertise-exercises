@@ -92,6 +92,16 @@
 		]
 	},
 
+	"Cpp for loop vector": {
+		"scope": "cpp",
+		"prefix": "forvec",
+		"body": [
+			"for (auto i = $1.begin(); i != $1.end(); i ++) {",
+			"\t$0",
+			"}"
+		]
+	},
+
 	"Cpp Argparse Init": {
 		"scope": "cpp",
 		"prefix": "apinit",
