@@ -1,0 +1,180 @@
+This is METAFONT, Version 2.71828182 (preloaded base=mf 2021.7.8)  25 JUL 2021 16:25
+**class.cpp jf-FASTA-parser.cpp
+(class.cpp
+! A primary expression can't begin with `>'.
+<inserted text> 
+                0
+<to be read again> 
+                   >
+l.1 # include <string>
+                      
+? q
+OK, entering batchmode...
+>> #include
+>> false
+! Not implemented: (unknown numeric)<(boolean).
+<to be read again> 
+                   >
+l.1 # include <string>
+                      
+I'm afraid I don't know how to apply that operation to that
+combination of types. Continue, and I'll return the second
+argument (see above) as the result of the operation.
+
+>> false
+>> #include
+! Not implemented: (boolean)>(unknown numeric).
+<to be read again> 
+                   <
+l.2 # include <
+               vector>
+I'm afraid I don't know how to apply that operation to that
+combination of types. Continue, and I'll return the second
+argument (see above) as the result of the operation.
+
+>> -vector+#include
+! Unknown relation will be considered false.
+<to be read again> 
+                   >
+l.2 # include <vector>
+                      
+Oh dear. I can't decide if the expression above is positive,
+negative, or zero. So this comparison test won't be `true'.
+
+>> false
+>> #include
+! Not implemented: (boolean)>(unknown numeric).
+<to be read again> 
+                   <
+l.3 # include <
+               tuple>
+I'm afraid I don't know how to apply that operation to that
+combination of types. Continue, and I'll return the second
+argument (see above) as the result of the operation.
+
+>> -tuple+#include
+! Unknown relation will be considered false.
+<to be read again> 
+                   >
+l.3 # include <tuple>
+                     
+Oh dear. I can't decide if the expression above is positive,
+negative, or zero. So this comparison test won't be `true'.
+
+>> false
+>> #include
+! Not implemented: (boolean)>(unknown numeric).
+<to be read again> 
+                   "class.hpp"
+l.5 # include "class.hpp"
+                         
+I'm afraid I don't know how to apply that operation to that
+combination of types. Continue, and I'll return the second
+argument (see above) as the result of the operation.
+
+>> #include
+! Isolated expression.
+<to be read again> 
+                   "class.hpp"
+l.5 # include "class.hpp"
+                         
+I couldn't find an `=' or `:=' after the
+expression that is shown above this error message,
+so I guess I'll just ignore it and carry on.
+
+! Extra tokens will be flushed.
+<to be read again> 
+                   "class.hpp"
+l.5 # include "class.hpp"
+                         
+I've just read as much of that statement as I could fathom,
+so a semicolon should have been next. It's very puzzling...
+but I'll try to get myself back together, by ignoring
+everything up to the next `;'. Please insert a semicolon
+now in front of anything that you don't want me to delete.
+(See Chapter 27 of The METAFONTbook for an example.)
+
+>> output.push_back
+! Isolated expression.
+<to be read again> 
+                   (
+l.11             output.push_back(
+                                   std::make_tuple( filename, input, input ) );
+I couldn't find an `=' or `:=' after the
+expression that is shown above this error message,
+so I guess I'll just ignore it and carry on.
+
+! Extra tokens will be flushed.
+<to be read again> 
+                   (
+l.11             output.push_back(
+                                   std::make_tuple( filename, input, input ) );
+I've just read as much of that statement as I could fathom,
+so a semicolon should have been next. It's very puzzling...
+but I'll try to get myself back together, by ignoring
+everything up to the next `;'. Please insert a semicolon
+now in front of anything that you don't want me to delete.
+(See Chapter 27 of The METAFONTbook for an example.)
+
+>> return
+! Isolated expression.
+<to be read again> 
+                   (
+l.13             return (
+                         output);
+I couldn't find an `=' or `:=' after the
+expression that is shown above this error message,
+so I guess I'll just ignore it and carry on.
+
+! Extra tokens will be flushed.
+<to be read again> 
+                   (
+l.13             return (
+                         output);
+I've just read as much of that statement as I could fathom,
+so a semicolon should have been next. It's very puzzling...
+but I'll try to get myself back together, by ignoring
+everything up to the next `;'. Please insert a semicolon
+now in front of anything that you don't want me to delete.
+(See Chapter 27 of The METAFONTbook for an example.)
+
+! A statement can't begin with `}'.
+<to be read again> 
+                   }
+l.14         }
+              
+I was looking for the beginning of a new statement.
+If you just proceed without changing anything, I'll ignore
+everything up to the next `;'. Please insert a semicolon
+now in front of anything that you don't want me to delete.
+(See Chapter 27 of The METAFONTbook for an example.)
+
+! Extra tokens will be flushed.
+<to be read again> 
+                   }
+l.14         }
+              
+I've just read as much of that statement as I could fathom,
+so a semicolon should have been next. It's very puzzling...
+but I'll try to get myself back together, by ignoring
+everything up to the next `;'. Please insert a semicolon
+now in front of anything that you don't want me to delete.
+(See Chapter 27 of The METAFONTbook for an example.)
+
+)
+! File ended while scanning to the end of the statement.
+<inserted text> 
+                ;
+<*> class.cpp
+              jf-FASTA-parser.cpp
+A previous error seems to have propagated,
+causing me to read past where you wanted me to stop.
+I'll try to recover; but if the error is serious,
+you'd better type `E' or `X' now and fix your file.
+
+! Emergency stop.
+<*> class.cpp jf-FASTA-parser.cpp
+                                 
+*** (job aborted, no legal end found)
+
+
