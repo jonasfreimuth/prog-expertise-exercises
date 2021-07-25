@@ -112,6 +112,30 @@
 		]
 	},
 
+	"Cpp sort map into vector": {
+		"scope": "cpp",
+		"prefix": "sortmap",
+		"body": [
+			"for (int ${1:i} = 0; $1 < ${2:map_name}.size(); $1 ++) {  ",
+			"\t// from https://stackoverflow.com/questions/30611709/find-element-with-max-value-from-stdmap#30611887:",
+			"\tauto max = std::max_element($2.begin(), $2.end(),",
+			"\t\t[](const std::pair<${3:std::string}, ${4:int}>& p1, const std::pair<$3, $4>& p2) {",
+			"\t\t\treturn p1.second < p2.second; ",
+			"\t\t});",
+			"\t",
+			"\t${5:vector_name}.push_back( std::make_tuple( ${0:filename, max->first, std::to_string(max->second)} ) );",
+			"\t",
+			"\tmax->second = 0;",
+			"}"
+		]
+	},
+
+	"Cpp tuple get": {
+		"scope": "cpp",
+		"prefix": "get",
+		"body": "std::<$2>($1)$0"
+	},
+
 	"Cpp regex_search": {
 		"scope": "cpp",
 		"prefix": "search",
