@@ -3,10 +3,11 @@
     # define CLASS_HPP
 
 # include <string>
+# include <vector>
 
 class TmpClass {
     public:
-        std::string tmp_function (std::string input);
+        std::vector< std::tuple< std::string, std::string, std::string > > tmp_function (std::string filename, std::string input);
 
 };
 

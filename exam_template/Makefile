@@ -14,10 +14,10 @@ CC =  g++
 CF = -std=c++17
 
 compile: $(OBJ)main.o $(OBJ)class.o 
-$(CC) $(OBJ)/main.o $(OBJ)class.o  -o class$(EXT) $(CF)
+	$(CC) $(OBJ)/main.o $(OBJ)class.o  -o class$(EXT) $(CF)
 
 class$(EXT): $(OBJ)main.o $(OBJ)class.o 
-$(CC) $(OBJ)main.o $(OBJ)class.o  -o class$(EXT) $(CF)
+	$(CC) $(OBJ)main.o $(OBJ)class.o  -o class$(EXT) $(CF)
 
 $(OBJ)main.o: main.cpp $(INC)argparse.hpp $(OBJ)
 	$(CC) -c main.cpp -o $(OBJ)main.o  $(CF)
@@ -25,7 +25,7 @@ $(OBJ)main.o: main.cpp $(INC)argparse.hpp $(OBJ)
 $(OBJ)class.o: class.cpp $(INC)argparse.hpp $(INC)class.hpp $(OBJ)
 	$(CC) -c class.cpp -o $(OBJ)class.o  $(CF)
 
-build:
+$(OBJ):
 	mkdir $(OBJ)
 
 .PHONY: clean, cleanall
