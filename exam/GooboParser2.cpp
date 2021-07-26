@@ -100,7 +100,6 @@ int main(int argc, char const *argv[]) {
     }
 
     parser.add_argument("-i", "--id")
-        // TODO: If time allows, specify patterns
         .help(slims_help + 
             " Multiple slims must be prepended with -i or --id again.")
         .append();

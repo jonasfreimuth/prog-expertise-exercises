@@ -21,12 +21,21 @@ int main(int argc, char const *argv[]) {
         .help("Specify filenames of the .obo files."
             " All trailing arguments will be interpreted as such.")
         .required()
-        .remaining();
+        .remaining();    
+    
+    string slims_help = "Which GO slim to look for. One of ";
+
+    for (auto i = valid_slims.begin(); i != valid_slims.end(); i ++) {
+        slims_help = slims_help + * i;
+
+        if (i + 1 != valid_slims.end()) {
+            slims_help = slims_help + ", ";
+        }
+    }
 
     parser.add_argument("-i", "--id")
-        // TODO: If time allows, specify patterns
-        .help("Which Id to look for. "
-            " Multiple ids must be prepended with -i or --id again.")
+        .help(slims_help + 
+            " Multiple slims must be prepended with -i or --id again.")
         .append();
 
     string command_help = "Specify which command to execute. One of ";
