@@ -84,7 +84,7 @@ int main(int argc, char const *argv[]) {
         std::cout << "No files provided" << std::endl;
     }
 
-    vector< string > ids = {};
+    vector< string > ids = { "" };
     
     // get ids and check validity
     if (parser.is_used("--id")) {   
