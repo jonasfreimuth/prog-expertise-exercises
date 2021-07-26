@@ -47,6 +47,7 @@ int main(int argc, char const *argv[]) {
     try {
         parser.parse_args(argc, argv);
     } catch (const std::runtime_error& err) {
+        cout << "Example call: ./GooboParser1.bin -c getSlimStats -i yeast -f go.obo\n";
         std::cout << err.what() << std::endl;
         std::cout << parser;
         exit(0);

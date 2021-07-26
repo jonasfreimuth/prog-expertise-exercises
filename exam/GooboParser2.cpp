@@ -30,9 +30,9 @@ std::vector< std::tuple< std::string, std::string, std::string > > getSlimTab (s
     std::string slim = "";
     std::string name = "";
 
-    // TODO disable debug
+    /* // TODO disable debug
     int i = 0;
-    int k = 10000;
+    int k = 10000; */
     
     infile.open(filename);
     
@@ -63,9 +63,9 @@ std::vector< std::tuple< std::string, std::string, std::string > > getSlimTab (s
             id = "";
         }  
 
-        // TODO: disable debug
+        /* // TODO: disable debug
         i ++;
-        if (i > k) break; 
+        if (i > k) break;  */
     }
 
     infile.close();
@@ -81,19 +81,28 @@ int main(int argc, char const *argv[]) {
     vector< string > valid_commands = { "getSlimTab", "getSlimStats" };
     vector< string > valid_slims = { "generic", "pir", "plant", "pombo", "yeast" };
 
-    // TODO: Fit correct name
     argparse::ArgumentParser parser("GooboParser1.bin");
     
     parser.add_argument("-f", "--files")
         .help("Specify filenames of the .obo files."
             " All trailing arguments will be interpreted as such.")
         .required()
-        .remaining();
+        .remaining();    
+    
+    string slims_help = "Which GO slim to look for. One of ";
+
+    for (auto i = valid_slims.begin(); i != valid_slims.end(); i ++) {
+        slims_help = slims_help + * i;
+
+        if (i + 1 != valid_slims.end()) {
+            slims_help = slims_help + ", ";
+        }
+    }
 
     parser.add_argument("-i", "--id")
         // TODO: If time allows, specify patterns
-        .help("Which Id to look for. "
-            " Multiple ids must be prepended with -i or --id again.")
+        .help(slims_help + 
+            " Multiple slims must be prepended with -i or --id again.")
         .append();
 
     string command_help = "Specify which command to execute. One of ";
@@ -114,6 +123,7 @@ int main(int argc, char const *argv[]) {
     try {
         parser.parse_args(argc, argv);
     } catch (const std::runtime_error& err) {
+        cout << "Example call: ./GooboParser2.bin -c getSlimTab -i yeast -i plant  -f go.obo\n";
         std::cout << err.what() << std::endl;
         std::cout << parser;
         exit(0);
@@ -174,7 +184,6 @@ int main(int argc, char const *argv[]) {
         }
     } 
 
-    // TODO: Ensure the types fit
     vector< tuple< string, string, string > > res = {};
     vector< tuple< string, string, string > > tmp_res = {};
 
@@ -189,8 +198,8 @@ int main(int argc, char const *argv[]) {
                     res.insert(res.end(), tmp_res.begin(), tmp_res.end());
                 }               
             }
-        } else if (* cmd == "") {
-            // TODO: Expand for more commands
+        } else if (* cmd == "getSlimStats") {
+            cout << "Pretending to get slim stats...\n";
         }
     }
 
